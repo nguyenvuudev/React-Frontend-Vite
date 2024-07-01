@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import {
   createBrowserRouter,
   RouterProvider,
-} from "react-router-dom";
-import LoginPage from './pages/login';
+} from "react-router-dom"
+import LoginPage from './pages/login'
 
 
 
@@ -20,13 +20,13 @@ export default function App() {
     {
       path: "/",
       element: <Layout />,
-      errorElement: <div>404 not found hoi dan it</div>,
+      errorElement: <div>404 not found page</div>,
     },
     {
       path: "/login",
       element: <LoginPage />,
     },
-  ]);
+  ])
 
 
   return (

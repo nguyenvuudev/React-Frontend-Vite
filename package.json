@@ -1,11 +1,11 @@
 {
-  "name": "fe-vite",
+  "name": "react-fe-vite",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "vite",
-    "dev": "vite",
+    "start": "vite -- host",
+    "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview"
   },
