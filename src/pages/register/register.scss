@@ -1,12 +1,13 @@
 :root {
-  --color-background: linear-gradient(315deg, #6a00ff 0%, #bb00ff 74%);
-  --color-purple: #9100bd;
-  --color-black: #000000;
+  --color-linear: linear-gradient(319deg, #663dff 0%, #aa00ff 37%, #cc4499 100%);
+  
+  --color-purple: #6a01ba;
+  --color-black: #9d00ff;
   --color-white: #ffffff;
 
-  --color-btnPurple: #b300d9;
-  --color-btnHover: #c101ec;
-  --color-link: #f200f3;
+  --color-btnPurple: #bd009a;
+  --color-btnHover: #a80189;
+  --color-link: #ff00f5;
 
   --shadow-large: 0 0 10px #000000
 }
@@ -15,18 +16,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: var(--color-background);
+  background: var(--color-black);
   min-height: 100vh;
 
   .wrapper-register {
-    background: var(--color-purple);
-    max-width: 40rem;
+    background: var(--color-linear);
+    max-width: 35rem;
     width: 100%;
     padding: 2rem 2.5rem;
     border-radius: 20px;
     box-shadow: var(--shadow-large);
 
-    .title-regiser {
+    .title-register {
       color: var(--color-white);
       text-align: center;
       font-size: 40px;
@@ -51,6 +52,8 @@
           padding: 10px 35px;
           margin: 15px 0;
           background: var(--color-btnPurple);
+          border: none;
+          outline: none;
         }
 
         .ant-btn-primary:hover {
@@ -58,7 +61,7 @@
         }
       }
 
-      .text-regiser {
+      .text-register {
         text-align: center;
         color: var(--color-white);
 
