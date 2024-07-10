@@ -1,0 +1,76 @@
+// :root {
+//   -color-linear: linear-gradient(319deg, #663dff 0%, #aa00ff 37%, #cc4499 100%);
+  
+//   --color-purple: #6a01ba;
+//   --color-black: #9d00ff;
+//   --color-white: #ffffff;
+
+//   --color-btnPurple: #bd009a;
+//   --color-btnHover: #a80189;
+//   --color-link: #ff00f5;
+
+//   --shadow-large: 0 0 10px #000000
+// }
+
+// .container-login {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   background: var(--color-black);
+//   min-height: 100vh;
+
+//   .wrapper-login {
+//     background: var(--color-linear);
+//     max-width: 35rem;
+//     width: 100%;
+//     padding: 2rem 2.5rem;
+//     border-radius: 20px;
+//     box-shadow: var(--shadow-large);
+
+//     .title-login {
+//       color: var(--color-white);
+//       text-align: center;
+//       font-size: 40px;
+//       font-weight: 700;
+//       text-transform: uppercase;
+//       margin: 0 0 20px 0;
+//     }
+
+//     .form-control {
+//       .ant-form-item-label>label {
+//         color: #ffffff;
+//       }
+
+//       //button
+//       .ant-form-item-control-input-content {
+//         text-align: center;
+
+//         .ant-btn-primary {
+//           color: var(--color-white);
+//           font-weight: bold;
+//           height: unset;
+//           padding: 10px 35px;
+//           margin: 15px 0;
+//           background: var(--color-btnPurple);
+//           border: none;
+//           outline: none;
+//         }
+
+//         .ant-btn-primary:hover {
+//           background: var(--color-btnHover);
+//         }
+//       }
+
+//       .text-login {
+//         text-align: center;
+//         color: var(--color-white);
+
+//         a {
+//           color: var(--color-link);
+//         }
+//       }
+
+      
+//     }
+//   }
+// }

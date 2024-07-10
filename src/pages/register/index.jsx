@@ -1,18 +1,36 @@
-import { Button, Form, Input } from 'antd'
-import { Link } from 'react-router-dom'
+import { Button, Form, Input, message, notification } from 'antd'
+import { Link, useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 import './register.scss'
 import '../../index.css'
+import { callRegister } from '../../services/api'
 
 const RegisterPage = () => {
+    const navigate = useNavigate()
+    const [isSubmit, setIsSubmit] = useState(false)
 
-    const onFinish = (values) => {
-        console.log('Success:', values)
+    const onFinish = async (values) => {
+        const { fullName, email, password, phone } = values
+        setIsSubmit(true)
+        const res = await callRegister(fullName, email, password, phone)
+        setIsSubmit(false)
+        if (res?.data?._id) {
+            message.success('Đăng ký tài khoản thành công!')
+            navigate('/login')
+        } else {
+            notification.error({
+                message: "Có lỗi xảy ra",
+                description:
+                    res.message && res.message.length > 0 ? res.message[0] : res.message,
+                duration: 5
+            })
+        }
     }
 
     return (
         <div className="container-register">
             <div className="wrapper-register">
-                <div className="title-regiser">
+                <div className="title-register">
                     Đăng ký tài khoản
                 </div>
                 <div className="form-control">
@@ -58,11 +76,11 @@ const RegisterPage = () => {
                         </Form.Item>
 
                         <Form.Item  >
-                            <Button className='btn-regiser' type="primary" htmlType="submit" loading={false}>
+                            <Button className='btn-register' type="primary" htmlType="submit" loading={isSubmit}>
                                 Đăng ký
                             </Button>
                         </Form.Item>
-                        <p className='text-regiser'>Đã có tài khoản ?
+                        <p className='text-register'>Đã có tài khoản ?
                             <a>
                                 <Link to='/login' > Đăng Nhập </Link>
                             </a>
