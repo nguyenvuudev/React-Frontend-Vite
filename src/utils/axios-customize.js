@@ -4,6 +4,7 @@ const baseBackendURL = import.meta.env.VITE_BACKEND_URL
 
 const instance = axios.create({
   baseURL: baseBackendURL,
+  withCredentials: true,
 })
 
 instance.interceptors.request.use(
