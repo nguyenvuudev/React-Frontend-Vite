@@ -7,6 +7,8 @@ const instance = axios.create({
   withCredentials: true,
 })
 
+instance.defaults.headers.common = { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` }
+
 instance.interceptors.request.use(
   function (config) {
     return config
@@ -19,7 +21,7 @@ instance.interceptors.response.use(
   function (response) {
     console.log(response);
     return response && response.data ? response.data : response
-    
+
   }, function (error) {
     return error?.response?.data ?? Promise.reject(error)
   })
