@@ -18,10 +18,11 @@
   align-items: center;
   background: var(--color-black);
   min-height: 100vh;
+  overflow: hidden;
 
   .wrapper-register {
     background: var(--color-linear);
-    max-width: 35rem;
+    max-width: 30rem;
     width: 100%;
     padding: 2rem 2.5rem;
     border-radius: 20px;
