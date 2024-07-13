@@ -12,8 +12,12 @@ import Footer from './components/Footer'
 import HomePage from './components/Home'
 import RegisterPage from './pages/register'
 import { callFetchAccount } from './services/api'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { doGetAccountAction } from './redux/account/accountSlice'
+import LoadingPage from './components/Loading'
+import NotFound404 from './components/NotFound404'
+import AdminPage from './pages/admin'
+import ProtectedRoute from './components/ProtectedRoute'
 
 
 const Layout = () => {
@@ -27,14 +31,20 @@ const Layout = () => {
 }
 
 export default function App() {
-const dispatch = useDispatch()
+  const dispatch = useDispatch()
+  const isAuthenticated = useSelector(state => state.account.isAuthenticated)
 
-const getAccount = async () => {
-  const res = await callFetchAccount()
-  if(res && res.data) {
-    dispatch(doGetAccountAction(res.data))
+  const getAccount = async () => {
+    if (window.location.pathname === '/login'
+      || window.location.pathname === '/register'
+      || window.location.pathname === '/admin'
+
+    ) return // Ko gọi API 
+    const res = await callFetchAccount()
+    if (res && res.data) {
+      dispatch(doGetAccountAction(res.data))
+    }
   }
-}
 
   useEffect(() => {
     getAccount()
@@ -44,12 +54,38 @@ const getAccount = async () => {
     {
       path: "/",
       element: <Layout />,
-      errorElement: <div>404 not found page</div>,
+      errorElement: <NotFound404 />,
 
       children: [
         {
           index: true,
           element: <HomePage />
+        },
+
+        {
+          path: "user",
+          element: <ContactPage />,
+        },
+
+        {
+          path: "book",
+          element: <BookPage />,
+        },
+      ],
+    },
+
+    {
+      path: "/admin",
+      element: <Layout />,
+      errorElement: <NotFound404 />,
+
+      children: [
+        {
+          index: true,
+          element:
+            <ProtectedRoute>
+              <AdminPage />
+            </ProtectedRoute>
         },
 
         {
@@ -78,7 +114,14 @@ const getAccount = async () => {
 
   return (
     <>
-      <RouterProvider router={router} />
+      {isAuthenticated === true
+        || window.location.pathname === '/login'
+        || window.location.pathname === '/register'
+        || window.location.pathname === '/admin' ?
+        <RouterProvider router={router} />
+        :
+        <LoadingPage />
+      }
     </>
   )
 }
