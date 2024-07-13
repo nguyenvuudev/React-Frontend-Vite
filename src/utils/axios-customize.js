@@ -4,9 +4,10 @@ const baseBackendURL = import.meta.env.VITE_BACKEND_URL
 
 const instance = axios.create({
   baseURL: baseBackendURL,
-  withCredentials: true,
+  withCredentials: true, // set cookies
 })
 
+// Sending the bearer token with axios
 instance.defaults.headers.common = { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` }
 
 instance.interceptors.request.use(
