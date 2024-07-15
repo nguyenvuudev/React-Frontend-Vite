@@ -30,6 +30,20 @@ const Layout = () => {
   )
 }
 
+const LayoutAdmin = () => {
+  const isAdminRoute = window.location.pathname.startsWith('/admin')
+  const user = useSelector(state => state.account.user)
+  const userRole = user.role
+
+  return (
+    <div className="layout-app">
+      {isAdminRoute && userRole === 'ADMIN' && <Header />}
+      <Outlet />
+      {isAdminRoute && userRole === 'ADMIN' && <Footer />}
+    </div>
+  )
+}
+
 export default function App() {
   const dispatch = useDispatch()
   const isAuthenticated = useSelector(state => state.account.isAuthenticated)
@@ -37,7 +51,7 @@ export default function App() {
   const getAccount = async () => {
     if (window.location.pathname === '/login'
       || window.location.pathname === '/register'
-      || window.location.pathname === '/admin'
+      || window.location.pathname === '/'
 
     ) return // Ko gọi API 
     const res = await callFetchAccount()
@@ -76,7 +90,7 @@ export default function App() {
 
     {
       path: "/admin",
-      element: <Layout />,
+      element: <LayoutAdmin />,
       errorElement: <NotFound404 />,
 
       children: [
@@ -117,7 +131,8 @@ export default function App() {
       {isAuthenticated === true
         || window.location.pathname === '/login'
         || window.location.pathname === '/register'
-        || window.location.pathname === '/admin' ?
+        || window.location.pathname === '/'
+        ?
         <RouterProvider router={router} />
         :
         <LoadingPage />

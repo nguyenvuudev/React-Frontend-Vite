@@ -1,6 +1,6 @@
+import React from 'react'
 import { Button, Result } from 'antd'
-
-const NotFound404 = () => (
+const NotAuthorized403 = () => (
   <Result
     style={{
       position: 'absolute',
@@ -9,15 +9,15 @@ const NotFound404 = () => (
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)'
     }}
-    status="404"
-    title="404"
-    subTitle="Sorry, the page you visited does not exist."
+    status="403"
+    title="403"
+    subTitle="Sorry, you are not authorized to access this page."
     extra={
       < Button type="primary" >
-        <a href="/">Back Home</a>
+        <a href="/login">Back Home</a>
       </Button >
     }
   />
 )
 
-export default NotFound404
+export default NotAuthorized403;
