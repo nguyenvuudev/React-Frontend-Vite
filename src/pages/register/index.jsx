@@ -2,7 +2,6 @@ import { Button, Form, Input, message, notification } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import './register.scss'
-import '../../index.css'
 import { callRegister } from '../../services/api'
 
 const RegisterPage = () => {

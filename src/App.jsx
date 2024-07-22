@@ -18,6 +18,8 @@ import LoadingPage from './components/Loading'
 import NotFound404 from './components/NotFound404'
 import AdminPage from './pages/admin'
 import ProtectedRoute from './components/ProtectedRoute'
+import LayoutAdmin from './components/Admin/layoutAdmin'
+import './styles/reset.scss';
 
 
 const Layout = () => {
@@ -30,19 +32,19 @@ const Layout = () => {
   )
 }
 
-const LayoutAdmin = () => {
-  const isAdminRoute = window.location.pathname.startsWith('/admin')
-  const user = useSelector(state => state.account.user)
-  const userRole = user.role
+// const LayoutAdmin = () => {
+//   const isAdminRoute = window.location.pathname.startsWith('/admin')
+//   const user = useSelector(state => state.account.user)
+//   const userRole = user.role
 
-  return (
-    <div className="layout-app">
-      {isAdminRoute && userRole === 'ADMIN' && <Header />}
-      <Outlet />
-      {isAdminRoute && userRole === 'ADMIN' && <Footer />}
-    </div>
-  )
-}
+//   return (
+//     <div className="layout-app">
+//       {isAdminRoute && userRole === 'ADMIN' && <Header />}
+//       <Outlet />
+//       {isAdminRoute && userRole === 'ADMIN' && <Footer />}
+//     </div>
+//   )
+// }
 
 export default function App() {
   const dispatch = useDispatch()

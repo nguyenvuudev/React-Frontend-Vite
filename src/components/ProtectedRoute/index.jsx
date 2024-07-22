@@ -2,7 +2,7 @@ import { useSelector } from "react-redux"
 import { Navigate } from "react-router-dom"
 import NotAuthorized403 from "../NotAuthorized403"
 
-const RoleBaseRoute = (prop) => {
+const RoleBaseRoute = (props) => {
   const isAdminRoute = window.location.pathname.startsWith('/admin')
   const user = useSelector(state => state.account.user)
   const userRole = user.role
