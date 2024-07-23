@@ -1,27 +1,27 @@
-import { Button, Divider, Form, Input, message, notification } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
-import { callLogin } from '../../services/api';
-import './login.scss';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { doLoginAction } from '../../redux/account/accountSlice';
+import { Button, Divider, Form, Input, message, notification } from 'antd'
+import { Link, useNavigate } from 'react-router-dom'
+import { callLogin } from '../../services/api'
+import './login.scss'
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { doLoginAction } from '../../redux/account/accountSlice'
 
 const LoginPage = () => {
-    const navigate = useNavigate();
-    const [isSubmit, setIsSubmit] = useState(false);
+    const navigate = useNavigate()
+    const [isSubmit, setIsSubmit] = useState(false)
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
     const onFinish = async (values) => {
 
-        const { username, password } = values;
-        setIsSubmit(true);
-        const res = await callLogin(username, password);
-        setIsSubmit(false);
+        const { username, password } = values
+        setIsSubmit(true)
+        const res = await callLogin(username, password)
+        setIsSubmit(false)
         if (res?.data) {
-            localStorage.setItem('access_token', res.data.access_token);
+            localStorage.setItem('access_token', res.data.access_token)
             dispatch(doLoginAction(res.data.user))
-            message.success('Đăng nhập tài khoản thành công!');
+            message.success('Đăng nhập tài khoản thành công!')
             navigate('/')
         } else {
             notification.error({
@@ -31,7 +31,7 @@ const LoginPage = () => {
                 duration: 5
             })
         }
-    };
+    }
 
 
     return (
@@ -89,4 +89,4 @@ const LoginPage = () => {
     )
 }
 
-export default LoginPage;
+export default LoginPage
