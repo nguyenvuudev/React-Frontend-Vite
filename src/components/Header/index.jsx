@@ -1,6 +1,7 @@
 import './header.scss'
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { TfiDrupal } from "react-icons/tfi"
 import { IoSearch } from "react-icons/io5"
 import { IoCart } from "react-icons/io5"
@@ -9,34 +10,54 @@ import { IoMdHome } from "react-icons/io"
 import { FaSmileWink } from "react-icons/fa"
 import { useNavigate } from 'react-router'
 import { TfiMenu } from "react-icons/tfi"
-import { Badge, Divider, Drawer, Dropdown, Space } from 'antd'
+import { Badge, Divider, Drawer, Dropdown, message, Space } from 'antd'
 import { DownOutlined } from '@ant-design/icons'
+import { callLogout } from '../../services/api'
+import { doLogoutAction } from '../../redux/account/accountSlice'
 
 const Header = () => {
-  const [openDrawer, setOpenDrawer] = useState(false);
-  const isAuthenticated = useSelector(state => state.account.isAuthenticated);
-  const user = useSelector(state => state.account.user);
-  const navigate = useNavigate();
+  const [openDrawer, setOpenDrawer] = useState(false)
+  const isAuthenticated = useSelector(state => state.account.isAuthenticated)
+  const user = useSelector(state => state.account.user)
+  
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const handleLogout = async () => {
+    const res = await callLogout()
+    if (res && res.data) {
+      dispatch(doLogoutAction())
+      message.success('Đăng xuất tài khoản thành công!')
+      navigate('/')
+    }
+  }
 
   const items = [
     {
-      label: <label>Quản lý tài khoản</label>,
+      label: <label
+        style={{ cursor: 'pointer' }}
+      >Quản lý tài khoản
+      </label>,
       key: 'account',
     },
     {
-      label: <label>Trang chủ</label>,
+      label: <label
+        style={{ cursor: 'pointer' }}
+      >Trang chủ
+      </label>,
       key: 'account',
     },
     {
-      label: <label>Thể loại</label>,
-      key: 'account',
-    },
-    {
-      label: <label >Đăng xuất</label>,
+      label: <label
+        style={{ cursor: 'pointer' }}
+        onClick={() => handleLogout()}
+      >Đăng xuất
+      </label>,
       key: 'logout',
     },
 
-  ];
+  ]
+
 
   return (
     <>
