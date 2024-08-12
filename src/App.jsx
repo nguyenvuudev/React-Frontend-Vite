@@ -18,8 +18,9 @@ import LoadingPage from './components/Loading'
 import NotFound404 from './components/NotFound404'
 import AdminPage from './pages/admin'
 import ProtectedRoute from './components/ProtectedRoute'
-import LayoutAdmin from './components/Admin/layoutAdmin'
+import LayoutAdmin from './components/Admin/LayoutAdmin'
 import './styles/reset.scss'
+import ManageUserPage from './pages/admin/user'
 
 
 const Layout = () => {
@@ -86,6 +87,13 @@ export default function App() {
           element:
             <ProtectedRoute>
               <AdminPage />
+            </ProtectedRoute>
+        },
+        {
+          path: "user",
+          element:
+            <ProtectedRoute>
+              <ManageUserPage />
             </ProtectedRoute>
         },
 
