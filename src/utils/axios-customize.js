@@ -22,7 +22,7 @@ const NO_RETRY_HEADER = 'x-no-retry'
 
 instance.interceptors.request.use(
   function (config) {
-    // console.log('===check config: ',config);
+    console.log('===check config: ', config);
     return config
 
   }, function (error) {
@@ -31,11 +31,11 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   function (response) {
-    // console.log('===check response: ', response);
+    console.log('===check response: ', response);
     return response && response.data ? response.data : response
 
   },
-  
+
   // Retry (gọi lại API khi hết hạn hoặc bị lỗi)
   async function (error) {
     if (error.config
@@ -52,7 +52,16 @@ instance.interceptors.response.use(
       }
     }
 
-    return error?.response?.data ?? Promise.reject(error)
+    // Chuyển người dùng về trang login khi hết hạn refresh token
+    if (error.config
+      && error.response
+      && +error.response.status === 400
+      && error.config.url === '/api/v1/auth/refresh'
+    ) {
+      window.location.href = '/login'
+    }
+
+      return error?.response?.data ?? Promise.reject(error)
   })
 
 export default instance
