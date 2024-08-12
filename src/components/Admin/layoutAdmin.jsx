@@ -14,7 +14,7 @@ import { Layout, Menu, Dropdown, Space, message } from 'antd'
 import { Outlet } from "react-router-dom"
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router'
-import './layoutAdmin.scss'
+import './LayoutAdmin.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import { TfiDrupal } from 'react-icons/tfi'
 import { callLogout } from '../../services/api'
@@ -33,18 +33,18 @@ const items = [
     // key: 'user',
     icon: <UserOutlined />,
     children: [
-      {
-        label: <Link to='/admin/user'>CRUD</Link>,
-        key: 'crud',
-        icon: <TeamOutlined />,
-      },
-      {
-        label: 'Files1',
-        key: 'file1',
-        icon: <TeamOutlined />,
-      }
+        {
+            label: <Link to='/admin/user'>CRUD</Link>,
+            key: 'crud',
+            icon: <TeamOutlined />,
+        },
+        {
+            label: 'Files1',
+            key: 'file1',
+            icon: <TeamOutlined />,
+        }
     ]
-  },
+},
   {
     label: <Link to='/admin/book'>Manage Books</Link>,
     key: 'book',

@@ -22,7 +22,7 @@ const NO_RETRY_HEADER = 'x-no-retry'
 
 instance.interceptors.request.use(
   function (config) {
-    console.log('===check config: ', config);
+    // console.log('===check config: ', config);
     return config
 
   }, function (error) {
@@ -31,7 +31,7 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   function (response) {
-    console.log('===check response: ', response);
+    // console.log('===check response: ', response);
     return response && response.data ? response.data : response
 
   },
