@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { TfiDrupal } from 'react-icons/tfi'
 import { callLogout } from '../../services/api'
 import { doLogoutAction } from '../../redux/account/accountSlice'
+import { Typography } from "antd"
 
 const { Content, Footer, Sider } = Layout
 
@@ -33,18 +34,18 @@ const items = [
     // key: 'user',
     icon: <UserOutlined />,
     children: [
-        {
-            label: <Link to='/admin/user'>CRUD</Link>,
-            key: 'crud',
-            icon: <TeamOutlined />,
-        },
-        {
-            label: 'Files1',
-            key: 'file1',
-            icon: <TeamOutlined />,
-        }
+      {
+        label: <Link to='/admin/user'>CRUD</Link>,
+        key: 'crud',
+        icon: <TeamOutlined />,
+      },
+      {
+        label: 'Files1',
+        key: 'file1',
+        icon: <TeamOutlined />,
+      }
     ]
-},
+  },
   {
     label: <Link to='/admin/book'>Manage Books</Link>,
     key: 'book',
@@ -76,46 +77,44 @@ const LayoutAdmin = () => {
 
   const itemsDropdown = [
     {
-      label: <label
-        style={{ cursor: 'pointer' }}
-      >Quản lý tài khoản
-      </label>,
+      label: <label style={{ cursor: 'pointer' }}>Quản lý tài khoản</label>,
       key: 'account',
     },
     {
-      label: <label
-        style={{ cursor: 'pointer' }}
-        onClick={() => handleLogout()}
-      >Đăng xuất
-      </label>,
+      label: <label style={{ cursor: 'pointer' }} onClick={() => handleLogout()}>Đăng xuất</label>,
       key: 'logout',
     },
-
   ]
 
   return (
-    <Layout
-      style={{ minHeight: '100vh' }}
-      className="layout-admin"
-    >
+    <Layout style={{ minHeight: '100vh' }} className="layout-admin">
       <Sider
         collapsible
         collapsed={collapsed}
-        onCollapse={(value) => setCollapsed(value)}>
+        onCollapse={(value) => setCollapsed(value)}
+      >
         <div
           style={{
-            height: 50,
-            margin: 15,
+            height: 80,
+            margin: 8,
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            color: '#ffffff'
-          }}>
+            color: '#ffffff',
+            flexDirection: 'column',
+          }}
+        >
           <TfiDrupal
             style={{
-              fontSize: '60px',
-              filter: 'drop-shadow(2px 2px 3px rgba(0, 0, 0, 1.0))'
-            }} />
+              fontSize: collapsed ? '50px' : '60px',
+              filter: 'drop-shadow(2px 2px 3px rgba(0, 0, 0, 1.0))',
+            }}
+          />
+          {!collapsed && (
+            <Typography style={{ fontSize: '20px', color: '#ffffff' }}>
+              Anime Store
+            </Typography>
+          )}
         </div>
         <Menu
           defaultSelectedKeys={[activeMenu]}
