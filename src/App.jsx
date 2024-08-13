@@ -78,7 +78,7 @@ export default function App() {
 
     {
       path: "/admin",
-      element: <LayoutAdmin />,
+      element: < LayoutAdmin/>,
       errorElement: <NotFound404 />,
 
       children: [
