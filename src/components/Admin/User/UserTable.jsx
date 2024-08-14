@@ -11,17 +11,23 @@ const UserTable = () => {
   const [total, setTotal] = useState(0)
 
   const [isLoading, setIsLoading] = useState(false)
+  const [filter, setFilter] = useState("") // lọc dữ liệu dựa trên các trường 
+  const [sortQuery, setSortQuery] = useState("") // sắp xếp theo kiểu asc (h) desc
 
   useEffect(() => {
     fetchUser()
-  }, [current, pageSize])
+  }, [current, pageSize, filter, sortQuery])
 
-  const fetchUser = async (searchFilter) => {
+  const fetchUser = async () => {
     setIsLoading(true)
     let query = `current=${current}&pageSize=${pageSize}`
-    if (searchFilter) {
-      query += `&${searchFilter}`
+    if (filter) {
+      query += `&${filter}`
     }
+    if (sortQuery) {
+      query += `&${sortQuery}`
+    }
+
     const res = await callFetchListUser(query)
     if (res && res.data) {
       setListUser(res.data.result)
@@ -77,13 +83,17 @@ const UserTable = () => {
     }
     if (pagination && pagination.pageSize !== pageSize) {
       setPageSize(pagination.pageSize)
+      setCurrent(1)
     }
     console.log('params', pagination, filters, sorter, extra)
+
+    if (sorter && sorter.field) {
+      const q = sorter.order === 'ascend' ? `sort=${sorter.field}` : `sort=-${sorter.field}`
+      setSortQuery(q)
+    }
   }
 
-  const handleSearch = (query) => {
-    fetchUser(query)
-  }
+ 
 
   const renderHeader = () => {
     return (
@@ -104,12 +114,19 @@ const UserTable = () => {
             icon={<PlusOutlined />}
             type="primary"
           >Thêm mới</Button>
-          <Button type='ghost' onClick={() => fetchUser()}>
+          <Button type='ghost' onClick={() => {
+            setFilter("")
+            setSortQuery("")
+          }}>
             <ReloadOutlined />
           </Button>
         </span>
       </div>
     )
+  }
+
+  const handleSearch = (query) => {
+    setFilter(query)
   }
 
   const handleDeleteUser = async (userId) => {
@@ -129,7 +146,10 @@ const UserTable = () => {
     <>
       <Row gutter={[20, 20]}>
         <Col span={24}>
-          <InputSearch handleSearch={handleSearch} />
+          <InputSearch
+            handleSearch={handleSearch}
+            setFilter={setFilter}
+          />
         </Col>
         <Col span={24}>
           <Table
