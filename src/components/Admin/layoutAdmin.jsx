@@ -143,7 +143,7 @@ const LayoutAdmin = () => {
         <Content>
           <Outlet />
         </Content>
-        <Footer style={{ padding: 0 }}>
+        <Footer style={{ padding: 0, position: 'relative' }}>
           React Frontend Vite &copy; Nguyenvuudev <HeartTwoTone />
         </Footer>
       </Layout>
