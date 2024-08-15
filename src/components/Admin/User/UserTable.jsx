@@ -3,6 +3,9 @@ import { Table, Row, Col, Button, Popconfirm, message, notification } from 'antd
 import InputSearch from './InputSearch'
 import { callDeleteUser, callFetchListUser } from '../../../services/api'
 import { CloudUploadOutlined, DeleteTwoTone, ExportOutlined, PlusOutlined, ReloadOutlined } from '@ant-design/icons'
+import UserModalCreate from './UserModalCreate'
+import UserViewDetail from './UserViewDetail'
+
 
 const UserTable = () => {
   const [listUser, setListUser] = useState([])
@@ -13,6 +16,10 @@ const UserTable = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [filter, setFilter] = useState("") // lọc dữ liệu dựa trên các trường 
   const [sortQuery, setSortQuery] = useState("") // sắp xếp theo kiểu asc (h) desc
+
+  const [openModalCreate, setOpenModalCreate] = useState(false)
+  const [openViewDetail, setOpenViewDetail] = useState(false)
+  const [dataViewDetail, setDataViewDetail] = useState(null)
 
   useEffect(() => {
     fetchUser()
@@ -40,6 +47,15 @@ const UserTable = () => {
     {
       title: 'Id',
       dataIndex: '_id',
+      render: (text, record, index) => { // record: lấy toàn bộ data trên một hàng
+        return (
+          <a href="#" onClick={() => {
+            setOpenViewDetail(true)
+            setDataViewDetail(record)
+          }}
+          >{record._id}</a>
+        )
+      }
     },
     {
       title: 'Tên hiển thị',
@@ -93,7 +109,7 @@ const UserTable = () => {
     }
   }
 
- 
+
 
   const renderHeader = () => {
     return (
@@ -113,6 +129,7 @@ const UserTable = () => {
           <Button
             icon={<PlusOutlined />}
             type="primary"
+            onClick={() => setOpenModalCreate(true)}
           >Thêm mới</Button>
           <Button type='ghost' onClick={() => {
             setFilter("")
@@ -172,6 +189,18 @@ const UserTable = () => {
           />
         </Col>
       </Row>
+
+      <UserModalCreate
+        openModalCreate={openModalCreate}
+        setOpenModalCreate={setOpenModalCreate}
+      />
+
+      <UserViewDetail
+        openViewDetail={openViewDetail}
+        setOpenViewDetail={setOpenViewDetail}
+        dataViewDetail={dataViewDetail}
+        setDataViewDetail={setDataViewDetail}
+      />
     </>
   )
 }
