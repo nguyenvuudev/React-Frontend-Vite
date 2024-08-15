@@ -101,7 +101,7 @@ const UserTable = () => {
       setPageSize(pagination.pageSize)
       setCurrent(1)
     }
-    console.log('params', pagination, filters, sorter, extra)
+    // console.log('params', pagination, filters, sorter, extra)
 
     if (sorter && sorter.field) {
       const q = sorter.order === 'ascend' ? `sort=${sorter.field}` : `sort=-${sorter.field}`
@@ -183,7 +183,8 @@ const UserTable = () => {
                 current: current,
                 pageSize: pageSize,
                 showSizeChanger: true,
-                total: total
+                total: total,
+              showTotal:(total, range) => {return (<div>{range[0]}-{range[1]} trên {total} hàng</div>)}
               }
             }
           />

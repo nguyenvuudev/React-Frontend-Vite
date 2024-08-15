@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { lazy, useState } from 'react'
 import {
   AppstoreOutlined,
   ExceptionOutlined,
@@ -10,7 +10,7 @@ import {
   MenuUnfoldOutlined,
   DownOutlined,
 } from '@ant-design/icons'
-import { Layout, Menu, Dropdown, Space, message } from 'antd'
+import { Layout, Menu, Dropdown, Space, message, Avatar } from 'antd'
 import { Outlet } from "react-router-dom"
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router'
@@ -77,14 +77,26 @@ const LayoutAdmin = () => {
 
   const itemsDropdown = [
     {
-      label: <label style={{ cursor: 'pointer' }}>Quản lý tài khoản</label>,
+      label: <label
+        style={{ cursor: 'pointer' }}
+      >Quản lý tài khoản</label>,
       key: 'account',
     },
     {
-      label: <label style={{ cursor: 'pointer' }} onClick={() => handleLogout()}>Đăng xuất</label>,
+      label: <Link to='/'>Trang chủ</Link>,
+      key: 'home'
+    },
+    {
+      label: <label
+        style={{ cursor: 'pointer' }}
+        onClick={() => handleLogout()}
+      >Đăng xuất</label>,
       key: 'logout',
     },
   ]
+
+  // const urlAvatar = `${import.meta.env.VITE_BACKEND_URL}/images/avatar/${user?.avatar}`
+  const urlAvatar = 'https://wac-cdn.atlassian.com/dam/jcr:ba03a215-2f45-40f5-8540-b2015223c918/Max-R_Headshot%20(1).jpg?cdnVersion=2147'
 
   return (
     <Layout style={{ minHeight: '100vh' }} className="layout-admin">
@@ -132,12 +144,12 @@ const LayoutAdmin = () => {
             })}
           </span>
           <Dropdown menu={{ items: itemsDropdown }} trigger={['click']}>
-            <a onClick={(e) => e.preventDefault()}>
+            <span onClick={(e) => e.preventDefault()}>
               <Space>
-                Welcome {user?.fullName}
-                <DownOutlined />
+                <Avatar src={urlAvatar} />
+                {user?.fullName}
               </Space>
-            </a>
+            </span>
           </Dropdown>
         </div>
         <Content>
