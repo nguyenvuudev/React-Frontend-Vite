@@ -7,19 +7,18 @@ import { IoSearch } from "react-icons/io5"
 import { IoCart } from "react-icons/io5"
 import { RxDividerVertical } from "react-icons/rx"
 import { IoMdHome } from "react-icons/io"
-import { FaSmileWink } from "react-icons/fa"
 import { useNavigate } from 'react-router'
 import { TfiMenu } from "react-icons/tfi"
-import { Badge, Divider, Drawer, Dropdown, message, Space } from 'antd'
-import { DownOutlined } from '@ant-design/icons'
+import { Badge, Divider, Drawer, Dropdown, message, Space, Avatar } from 'antd'
 import { callLogout } from '../../services/api'
 import { doLogoutAction } from '../../redux/account/accountSlice'
+import { Link } from 'react-router-dom'
 
 const Header = () => {
   const [openDrawer, setOpenDrawer] = useState(false)
   const isAuthenticated = useSelector(state => state.account.isAuthenticated)
   const user = useSelector(state => state.account.user)
-  
+
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -32,31 +31,32 @@ const Header = () => {
     }
   }
 
-  const items = [
+  let items = [
     {
       label: <label
         style={{ cursor: 'pointer' }}
-      >Quản lý tài khoản
-      </label>,
-      key: 'account',
-    },
-    {
-      label: <label
-        style={{ cursor: 'pointer' }}
-      >Trang chủ
-      </label>,
+      >Quản lý tài khoản</label>,
       key: 'account',
     },
     {
       label: <label
         style={{ cursor: 'pointer' }}
         onClick={() => handleLogout()}
-      >Đăng xuất
-      </label>,
+      >Đăng xuất</label>,
       key: 'logout',
     },
 
   ]
+
+  if (user?.role === 'ADMIN') {
+    items.unshift({
+      label: <Link to='/admin'>Trang quản trị</Link>,
+      key: 'admin'
+    })
+  }
+
+  // const urlAvatar = `${import.meta.env.VITE_BACKEND_URL}/images/avatar/${user?.avatar}`
+  const urlAvatar = 'https://wac-cdn.atlassian.com/dam/jcr:ba03a215-2f45-40f5-8540-b2015223c918/Max-R_Headshot%20(1).jpg?cdnVersion=2147'
 
 
   return (
@@ -95,15 +95,14 @@ const Header = () => {
                   <span className='text-item'>Trang Chủ</span>
                 </div>
                 <div className='element item-block'>
-                  <FaSmileWink className='icon-smile' />
                   {!isAuthenticated ?
                     <span onClick={() => navigate('/login')} className='text-item'>Tài Khoản</span>
                     :
                     <Dropdown menu={{ items }} trigger={['click']}>
                       <a onClick={(e) => e.preventDefault()}>
                         <Space>
-                          Hi, {user?.fullName}
-                          <DownOutlined />
+                          <Avatar src={urlAvatar}/>
+                          {user?.fullName}
                         </Space>
                       </a>
                     </Dropdown>
