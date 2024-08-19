@@ -3,8 +3,11 @@ import { Table, Row, Col, Button, Popconfirm, message, notification } from 'antd
 import InputSearch from './InputSearch'
 import { callDeleteUser, callFetchListUser } from '../../../services/api'
 import { CloudUploadOutlined, DeleteTwoTone, ExportOutlined, PlusOutlined, ReloadOutlined } from '@ant-design/icons'
+import { FORMAT_DATE_DISPLAY } from "../../../utils/constant"
 import UserModalCreate from './UserModalCreate'
 import UserViewDetail from './UserViewDetail'
+import moment from 'moment'
+
 
 
 const UserTable = () => {
@@ -73,7 +76,20 @@ const UserTable = () => {
       sorter: true,
     },
     {
-      title: 'Action',
+      title: 'Ngày cập nhật',
+      dataIndex: 'updatedAt',
+      sorter: true,
+      render: (text, record, index) => {
+        return (
+          <>
+            {moment(record.updatedAt).format(FORMAT_DATE_DISPLAY)}
+          </>
+        )
+      }
+
+    },
+    {
+      title: 'Hành động',
       render: (text, record, index) => {
         return (
           <Popconfirm
@@ -184,7 +200,7 @@ const UserTable = () => {
                 pageSize: pageSize,
                 showSizeChanger: true,
                 total: total,
-              showTotal:(total, range) => {return (<div>{range[0]}-{range[1]} trên {total} hàng</div>)}
+                showTotal: (total, range) => { return (<div>{range[0]}-{range[1]} trên {total} hàng</div>) }
               }
             }
           />
@@ -194,6 +210,7 @@ const UserTable = () => {
       <UserModalCreate
         openModalCreate={openModalCreate}
         setOpenModalCreate={setOpenModalCreate}
+        fetchUser={fetchUser}
       />
 
       <UserViewDetail

@@ -1,4 +1,4 @@
-import React, { lazy, useState } from 'react'
+import React, { useState } from 'react'
 import {
   AppstoreOutlined,
   ExceptionOutlined,
@@ -8,7 +8,6 @@ import {
   DollarCircleOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  DownOutlined,
 } from '@ant-design/icons'
 import { Layout, Menu, Dropdown, Space, message, Avatar } from 'antd'
 import { Outlet } from "react-router-dom"
@@ -145,7 +144,7 @@ const LayoutAdmin = () => {
           </span>
           <Dropdown menu={{ items: itemsDropdown }} trigger={['click']}>
             <span onClick={(e) => e.preventDefault()}>
-              <Space>
+              <Space style={{cursor: 'pointer'}}>
                 <Avatar src={urlAvatar} />
                 {user?.fullName}
               </Space>

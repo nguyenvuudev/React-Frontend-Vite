@@ -28,3 +28,7 @@ export const callDeleteUser = (id) => {
   //   data: null // test case false
   // }
 }
+
+export const callCreateUser = (fullName, email, password, phone) => {
+  return axios.post('/api/v1/user', {fullName, email, password, phone})
+}

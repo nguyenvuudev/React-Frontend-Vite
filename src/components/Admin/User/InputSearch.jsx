@@ -63,7 +63,7 @@ const InputSearch = (props) => {
             <Row>
                 <Col span={24} style={{ textAlign: 'right' }}>
                     <Button type="primary" htmlType="submit">
-                        Search
+                        Tìm kiếm
                     </Button>
                     <Button
                         style={{ margin: '0 8px' }}
@@ -72,7 +72,7 @@ const InputSearch = (props) => {
                             props.setFilter()
                         }}
                     >
-                        Clear
+                        Xóa
                     </Button>
                     {/* <a
                         style={{ fontSize: 12 }}
