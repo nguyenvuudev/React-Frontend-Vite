@@ -1,7 +1,8 @@
 import { InboxOutlined } from '@ant-design/icons'
-import { message, Modal, Table, Upload } from 'antd'
+import { message, Modal, notification, Table, Upload } from 'antd'
 import React, { useState } from 'react'
 import * as XLSX from 'xlsx'
+import { callBulkCreateUser } from '../../../../services/api'
 
 const { Dragger } = Upload
 
@@ -48,17 +49,39 @@ const UserImport = (props) => {
               setDataExcel(jsonData)
             }
           }
-          reader.readAsArrayBuffer(file) 
+          reader.readAsArrayBuffer(file)
         }
 
-        message.success(`${info.file.name} file uploaded successfully.`)
+        message.success(`${info.file.name} tập tin được tải lên thành công!`)
       } else if (status === 'error') {
-        message.error(`${info.file.name} file upload failed.`)
+        message.error(`${info.file.name} tập tin chưa được tải lên!`)
       }
     },
     onDrop(e) {
       console.log('Dropped files', e.dataTransfer.files)
     },
+  }
+
+  const handleSubmit = async () => {
+    const data = dataExcel.map(item => {
+      item.password = '123456'
+      return item
+    })
+    const res = await callBulkCreateUser(data)
+    if (res.data) {
+      notification.success({
+        description: `Success: ${res.data.countSuccess}, Error: ${res.data.countError}`,
+        message: "Upload thành công",
+      })
+      setDataExcel([])
+      setOpenModalImport(false)
+      props.fetchUser()
+    } else {
+      notification.error({
+        description: res.message,
+        message: "Đã có lỗi xảy ra",
+      })
+    }
   }
 
   const columns = [
@@ -82,21 +105,27 @@ const UserImport = (props) => {
         title="Tải lên tệp dữ liệu người dùng"
         width={'50vw'}
         open={openModalImport}
-        onOk={() => setOpenModalImport(false)}
-        onCancel={() => setOpenModalImport(false)}
-        maskClosable={false}
-        okButtonProps={{
-          disabled: true
+        onOk={() => handleSubmit()}
+        onCancel={() => {
+          setOpenModalImport(false)
+          setDataExcel([])
         }}
+        maskClosable={false}
+        okText="Thêm"
+        cancelText="Hủy"
+        okButtonProps={{ disabled: dataExcel.length < 1 }}
       >
-        <Dragger {...propsUpload}>
+        <Dragger
+          {...propsUpload}
+          showUploadList={dataExcel.length > 0}
+        >
           <p className="ant-upload-drag-icon">
             <InboxOutlined />
           </p>
-          <p className="ant-upload-text">Click or drag file to this area to upload</p>
+          <p className="ant-upload-text">Chọn hoặc kéo tệp vào khu vực này để tải lên</p>
           <p className="ant-upload-hint">
-            Support for a single or bulk upload. Strictly prohibited from uploading company data or other
-            banned files.
+            Hỗ trợ tải lên một lần hoặc hàng loạt. Nghiêm cấm tải lên dữ liệu công ty hoặc các
+            tệp bị cấm khác.
           </p>
         </Dragger>
         <div style={{ paddingTop: 20 }}>
