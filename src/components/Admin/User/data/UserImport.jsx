@@ -116,7 +116,10 @@ const UserImport = (props) => {
         maskClosable={false}
         okText="Thêm"
         cancelText="Hủy"
-        okButtonProps={{ disabled: dataExcel.length < 1, loading: isLoading }}
+        okButtonProps={{
+          disabled: dataExcel.length < 1,
+          loading: isLoading
+        }}
 
       >
         <Dragger

@@ -2,13 +2,21 @@ import React, { useEffect, useState } from 'react'
 import { Table, Row, Col, Button, Popconfirm, message, notification } from 'antd'
 import InputSearch from './InputSearch'
 import { callDeleteUser, callFetchListUser } from '../../../services/api'
-import { CloudUploadOutlined, DeleteTwoTone, ExportOutlined, PlusOutlined, ReloadOutlined } from '@ant-design/icons'
+import {
+  CloudUploadOutlined,
+  DeleteTwoTone,
+  ExportOutlined,
+  PlusOutlined,
+  ReloadOutlined,
+  EditTwoTone
+} from '@ant-design/icons'
 import { FORMAT_DATE_DISPLAY } from "../../../utils/constant"
 import UserModalCreate from './UserModalCreate'
 import UserViewDetail from './UserViewDetail'
 import moment from 'moment'
 import UserImport from './data/UserImport'
 import * as XLSX from 'xlsx'
+import UserModalUpdate from './UserModalUpdate'
 
 
 
@@ -23,10 +31,14 @@ const UserTable = () => {
   const [sortQuery, setSortQuery] = useState("") // sắp xếp theo kiểu asc (h) desc
 
   const [openModalCreate, setOpenModalCreate] = useState(false)
+
   const [openViewDetail, setOpenViewDetail] = useState(false)
   const [dataViewDetail, setDataViewDetail] = useState(null)
 
   const [openModalImport, setOpenModalImport] = useState(false)
+
+  const [openModalUpdate, setOpenModalUpdate] = useState(false)
+  const [dataUpdate, setDataUpdate] = useState(null)
 
   useEffect(() => {
     fetchUser()
@@ -96,21 +108,33 @@ const UserTable = () => {
       title: 'Hành động',
       render: (text, record, index) => {
         return (
-          <Popconfirm
-            placement="leftTop"
-            title={"Xác nhận xóa user"}
-            description={"Bạn có chắc chắn muốn xóa user này không?"}
-            onConfirm={() => handleDeleteUser(record._id)}
-            okText="Yes"
-            cancelText="No"
-          >
-            <span style={{ cursor: "pointer" }}>
-              <DeleteTwoTone twoToneColor="#ff4d4f" />
+          <>
+            <Popconfirm
+              placement="leftTop"
+              title={"Xác nhận xóa user"}
+              description={"Bạn có chắc chắn muốn xóa user này không?"}
+              onConfirm={() => handleDeleteUser(record._id)}
+              okText="Yes"
+              cancelText="No"
+            >
+              <span style={{ cursor: "pointer" }}>
+                <DeleteTwoTone twoToneColor="#ff4d4f" />
+              </span>
+            </Popconfirm>
+            <span style={{ cursor: "pointer", margin: '0 30px' }}>
+              <EditTwoTone
+                twoToneColor="#f1c40f"
+                onClick={() => {
+                  setOpenModalUpdate(true)
+                  setDataUpdate(record)
+                }}
+              />
             </span>
-          </Popconfirm>
+          </>
         )
-      }
-    },
+      },
+
+    }
   ]
 
   const onChange = (pagination, filters, sorter, extra) => {
@@ -133,34 +157,36 @@ const UserTable = () => {
 
   const renderHeader = () => {
     return (
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <span>Table List User</span>
-        <span style={{ display: 'flex', gap: 15 }}>
-          <Button
-            icon={<ExportOutlined />}
-            type="primary"
-            onClick={() => handleExport()}
-          >Xuất</Button>
+      <>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <span>Table List User</span>
+          <span style={{ display: 'flex', gap: 15 }}>
+            <Button
+              icon={<ExportOutlined />}
+              type="primary"
+              onClick={() => handleExport()}
+            >Xuất</Button>
 
-          <Button
-            icon={<CloudUploadOutlined />}
-            type="primary"
-            onClick={() => setOpenModalImport(true)}
-          >Tải lên</Button>
+            <Button
+              icon={<CloudUploadOutlined />}
+              type="primary"
+              onClick={() => setOpenModalImport(true)}
+            >Tải lên</Button>
 
-          <Button
-            icon={<PlusOutlined />}
-            type="primary"
-            onClick={() => setOpenModalCreate(true)}
-          >Thêm mới</Button>
-          <Button type='ghost' onClick={() => {
-            setFilter("")
-            setSortQuery("")
-          }}>
-            <ReloadOutlined />
-          </Button>
-        </span>
-      </div>
+            <Button
+              icon={<PlusOutlined />}
+              type="primary"
+              onClick={() => setOpenModalCreate(true)}
+            >Thêm mới</Button>
+            <Button type='ghost' onClick={() => {
+              setFilter("")
+              setSortQuery("")
+            }}>
+              <ReloadOutlined />
+            </Button>
+          </span>
+        </div>
+      </>
     )
   }
 
@@ -242,6 +268,14 @@ const UserTable = () => {
         setOpenModalImport={setOpenModalImport}
         isLoading={isLoading}
         setIsLoading={setIsLoading}
+        fetchUser={fetchUser}
+      />
+
+      <UserModalUpdate
+        openModalUpdate={openModalUpdate}
+        setOpenModalUpdate={setOpenModalUpdate}
+        dataUpdate={dataUpdate}
+        setDataUpdate={setDataUpdate}
         fetchUser={fetchUser}
       />
     </>

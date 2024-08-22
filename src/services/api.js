@@ -23,16 +23,20 @@ export const callFetchListUser = (query) => {
 
 export const callDeleteUser = (id) => {
   return axios.delete(`/api/v1/user/${id}`)
-  
+
   // return {
   //   data: null // test case false
   // }
 }
 
 export const callCreateUser = (fullName, email, password, phone) => {
-  return axios.post('/api/v1/user', {fullName, email, password, phone})
+  return axios.post('/api/v1/user', { fullName, email, password, phone })
 }
 
 export const callBulkCreateUser = (data) => {
   return axios.post('/api/v1/user/bulk-create', data)
+}
+
+export const callUpdateUser = (_id, fullName, email, phone) => {
+  return axios.put('/api/v1/user', { _id, fullName, email, phone })
 }
