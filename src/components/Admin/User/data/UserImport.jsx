@@ -3,11 +3,12 @@ import { message, Modal, notification, Table, Upload } from 'antd'
 import React, { useState } from 'react'
 import * as XLSX from 'xlsx'
 import { callBulkCreateUser } from '../../../../services/api'
+import templateFile from './template_data_user.xlsx?url'
 
 const { Dragger } = Upload
 
 const UserImport = (props) => {
-  const { openModalImport, setOpenModalImport } = props
+  const { openModalImport, setOpenModalImport, isLoading, setIsLoading } = props
 
   const [dataExcel, setDataExcel] = useState([])
 
@@ -63,6 +64,7 @@ const UserImport = (props) => {
   }
 
   const handleSubmit = async () => {
+    setIsLoading(true)
     const data = dataExcel.map(item => {
       item.password = '123456'
       return item
@@ -73,6 +75,7 @@ const UserImport = (props) => {
         description: `Success: ${res.data.countSuccess}, Error: ${res.data.countError}`,
         message: "Upload thành công",
       })
+      setIsLoading(false)
       setDataExcel([])
       setOpenModalImport(false)
       props.fetchUser()
@@ -113,7 +116,8 @@ const UserImport = (props) => {
         maskClosable={false}
         okText="Thêm"
         cancelText="Hủy"
-        okButtonProps={{ disabled: dataExcel.length < 1 }}
+        okButtonProps={{ disabled: dataExcel.length < 1, loading: isLoading }}
+
       >
         <Dragger
           {...propsUpload}
@@ -124,8 +128,9 @@ const UserImport = (props) => {
           </p>
           <p className="ant-upload-text">Chọn hoặc kéo tệp vào khu vực này để tải lên</p>
           <p className="ant-upload-hint">
-            Hỗ trợ tải lên một lần hoặc hàng loạt. Nghiêm cấm tải lên dữ liệu công ty hoặc các
-            tệp bị cấm khác.
+            Hỗ trợ cho một lần tải lên. Chỉ chấp nhận các file có đuôi .csv, .xls, .xlsx
+            &nbsp; <a onClick={e => e.stopPropagation() /*stopPropagation: ngăn chặn mở upload file*/}
+              href={templateFile} download> Click vào đây để tải file mẫu</a>
           </p>
         </Dragger>
         <div style={{ paddingTop: 20 }}>
@@ -133,6 +138,10 @@ const UserImport = (props) => {
             title={() => <span>Dữ liệu tải lên:</span>}
             columns={columns}
             dataSource={dataExcel}
+            pagination={{
+              defaultPageSize: 5,
+              pageSizeOptions: [5, 10, 20, 50, 100]
+            }}
           >
           </Table>
         </div>
