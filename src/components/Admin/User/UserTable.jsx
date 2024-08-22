@@ -14,7 +14,7 @@ import UserImport from './data/UserImport'
 const UserTable = () => {
   const [listUser, setListUser] = useState([])
   const [current, setCurrent] = useState(1) // vị trí trang hiện tại là 1
-  const [pageSize, setPageSize] = useState(5) // lấy ra số phần tử trong 1 trang 
+  const [pageSize, setPageSize] = useState(8) // lấy ra số phần tử trong 1 trang 
   const [total, setTotal] = useState(0)
 
   const [isLoading, setIsLoading] = useState(false)
@@ -202,6 +202,7 @@ const UserTable = () => {
               {
                 current: current,
                 pageSize: pageSize,
+                pageSizeOptions: [8, 10, 20, 50, 100],
                 showSizeChanger: true,
                 total: total,
                 showTotal: (total, range) => { return (<div>{range[0]}-{range[1]} trên {total} hàng</div>) }
@@ -227,6 +228,9 @@ const UserTable = () => {
       <UserImport
         openModalImport={openModalImport}
         setOpenModalImport={setOpenModalImport}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
+        fetchUser={fetchUser}
       />
     </>
   )
