@@ -8,6 +8,7 @@ import UserModalCreate from './UserModalCreate'
 import UserViewDetail from './UserViewDetail'
 import moment from 'moment'
 import UserImport from './data/UserImport'
+import * as XLSX from 'xlsx'
 
 
 
@@ -138,6 +139,7 @@ const UserTable = () => {
           <Button
             icon={<ExportOutlined />}
             type="primary"
+            onClick={() => handleExport()}
           >Xuất</Button>
 
           <Button
@@ -176,6 +178,16 @@ const UserTable = () => {
         message: 'Có lỗi xảy ra',
         description: res.message
       })
+    }
+  }
+
+  const handleExport = () => {
+    if (listUser.length > 0) {
+      console.log('====check leng listUser:', listUser.length);
+      const workSheet = XLSX.utils.json_to_sheet(listUser) // Chuyển đổi dữ liệu json sang sheet(bảng tính)
+      const workBook = XLSX.utils.book_new() // Tạo ra một book mới tương đương với một file Excel
+      XLSX.utils.book_append_sheet(workBook, workSheet, "Sheet1") // Thêm wokSheet vừa tạo vào workBook
+      XLSX.writeFile(workBook, "DataExcel.xlsx") // Ghi workBook ra file với tên DataExcel.xlsx
     }
   }
 
