@@ -5,7 +5,6 @@ import {
 } from "react-router-dom"
 import LoginPage from './pages/login'
 import ContactPage from './pages/contact'
-import BookPage from './pages/book'
 import { Outlet } from "react-router-dom"
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -21,6 +20,9 @@ import ProtectedRoute from './components/ProtectedRoute'
 import LayoutAdmin from './components/Admin/LayoutAdmin'
 import './styles/reset.scss'
 import ManageUserPage from './pages/admin/user'
+import ManageBook from './pages/admin/book'
+import BookPage from './pages/book'
+
 
 
 const Layout = () => {
@@ -104,7 +106,7 @@ export default function App() {
 
         {
           path: "book",
-          element: <BookPage />,
+          element: <ManageBook />,
         },
       ],
     },

@@ -1,9 +1,9 @@
 const BookPage = () => {
-  return (
-    <>
-      Book Page
-    </>
-  )
+return (
+  <>
+  Book Page
+  </>
+)
 }
 
 export default BookPage

@@ -40,3 +40,7 @@ export const callBulkCreateUser = (data) => {
 export const callUpdateUser = (_id, fullName, email, phone) => {
   return axios.put('/api/v1/user', { _id, fullName, email, phone })
 }
+
+export const callFetchListBook =(query) => {
+  return axios.get(`/api/v1/book?${query}`)
+}
