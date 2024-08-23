@@ -1,11 +1,23 @@
 .layout-admin {
   .admin-header {
-    height: 50px;
-    border-bottom: 1px solid #7700c1;
+    height: 80px;
+    background: #1d0136;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 15px;
+
+    .anticon-menu-fold {
+      color: #ffffff;
+    }
+
+    .anticon-menu-unfold {
+      color: #ffffff;
+    }
+
+    .ant-space-item {
+      color: #ffffff;
+    }
   }
 
   .ant-layout-sider {
@@ -57,6 +69,28 @@
     background: #33065b;
   }
 
+  .ant-layout-content {
+    background: #090111;
+  }
 
+  .manage-user-page {
+    padding: 20px;
+    background:#1d0136;
+    border-radius: 20px;
+    margin: 20px;
+  }
 
+  .manage-book-page {
+    padding: 20px;
+    background:#1d0136;
+    border-radius: 20px;
+    margin: 20px;
+  }
+
+  
+
+  footer.ant-layout-footer {
+    background: #090111;
+    color: #ffffff;
+}
 }

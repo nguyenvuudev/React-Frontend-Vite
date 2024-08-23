@@ -32,7 +32,7 @@ const InputSearch = (props) => {
         <>
             <Form form={form} name="advanced_search" style={formStyle} onFinish={onFinish}>
                 <Row gutter={24}>
-                    <Col span={8}>
+                    <Col span={8} style={{color: '#ffffff'}}>
                         <Form.Item
                             labelCol={{ span: 24 }} //whole column
                             name={`fullName`}

@@ -1,9 +1,10 @@
-import UserTable from "../../../components/Admin/User/UserTable"
+import UserTable from "../../../components/Admin/ManageUsers/UserTable"
+
 
 
 const ManageUserPage = () => {
   return (
-    <div className="manage-user-page" style={{padding: '20px'}}>
+    <div className="manage-user-page">
       <UserTable />
     </div>
   )

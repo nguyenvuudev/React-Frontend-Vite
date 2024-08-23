@@ -23,7 +23,7 @@ import UserModalUpdate from './UserModalUpdate'
 const UserTable = () => {
   const [listUser, setListUser] = useState([])
   const [current, setCurrent] = useState(1) // vị trí trang hiện tại là 1
-  const [pageSize, setPageSize] = useState(8) // lấy ra số phần tử trong 1 trang 
+  const [pageSize, setPageSize] = useState(7) // lấy ra số phần tử trong 1 trang 
   const [total, setTotal] = useState(0)
 
   const [isLoading, setIsLoading] = useState(false)
