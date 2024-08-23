@@ -178,7 +178,9 @@ const UserTable = () => {
               type="primary"
               onClick={() => setOpenModalCreate(true)}
             >Thêm mới</Button>
-            <Button type='ghost' onClick={() => {
+            <Button
+             type='ghost'
+              onClick={() => {
               setFilter("")
               setSortQuery("")
             }}>
