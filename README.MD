@@ -30,6 +30,6 @@
 ```
   - Cách cài đặt thư viện:
     + dùng npm (h) yarn
-      VD: npm install --save-exact react-router-dom@6.9.0 (h) yarn add react-router-dom@6.9.0 
+    + VD: npm install --save-exact react-router-dom@6.9.0 (h) yarn add react-router-dom@6.9.0 
 
   
