@@ -1,8 +1,9 @@
-import { Table } from "antd"
+import { Col, Row, Table } from "antd"
 import { useEffect, useState } from "react"
 import { callFetchListBook } from "../../../services/api"
 import Button from "antd/es/button"
 import { ReloadOutlined } from "@ant-design/icons"
+import InputSearch from "./InputSearch"
 
 
 const BookTable = () => {
@@ -12,17 +13,25 @@ const BookTable = () => {
   const [pageSize, setPageSize] = useState(7)
   const [total, setTotal] = useState(0)
 
+  const [isLoading, setIsLoading] = useState("")
+
   useEffect(() => {
     fetchBook()
   }, [current, pageSize])
 
-  const fetchBook = async () => {
+  const fetchBook = async (searchFilter) => {
+    setIsLoading(true)
     let query = `current=${current}&pageSize=${pageSize}`
+    if (searchFilter) {
+      query += `&${searchFilter}`
+    }
+
     const res = await callFetchListBook(query)
     if (res && res.data) {
       setListBook(res.data.result)
       setTotal(res.data.meta.total)
     }
+    setIsLoading(false)
   }
 
   const columns = [
@@ -65,6 +74,10 @@ const BookTable = () => {
     }
   }
 
+  const handleSearch = (query) => {
+    fetchBook(query)
+  }
+
   const renderHeader = () => {
     return (
       <>
@@ -79,12 +92,12 @@ const BookTable = () => {
             <Button
               type="primary"
             >
-             Xuất
+              Xuất
             </Button>
             <Button
-            type="ghost"
+              type="ghost"
             >
-            <ReloadOutlined />
+              <ReloadOutlined />
             </Button>
           </div>
         </div>
@@ -92,17 +105,29 @@ const BookTable = () => {
     )
   }
 
-
   return (
     <>
-      <Table
-        title={renderHeader}
-        columns={columns}
-        dataSource={listBook}
-        onChange={onChange}
-      >
+      <Row gutter={[20, 20]}>
+        <Col span={24}>
+          <InputSearch
+            handleSearch={handleSearch}
+          />
+        </Col>
+        <Col span={24}>
+          <Table
+            loading={isLoading}
+            title={renderHeader}
+            columns={columns}
+            dataSource={listBook}
+            onChange={onChange}
+            pagination={{
+              total: total
+            }}
+          >
 
-      </Table>
+          </Table>
+        </Col>
+      </Row>
     </>
   )
 }

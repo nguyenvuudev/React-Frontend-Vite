@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import { Button, Col, Form, Input, Row, theme } from 'antd'
 
 const InputSearch = (props) => {
@@ -32,7 +31,7 @@ const InputSearch = (props) => {
         <>
             <Form form={form} name="advanced_search" style={formStyle} onFinish={onFinish}>
                 <Row gutter={24}>
-                    <Col span={8} style={{color: '#ffffff'}}>
+                    <Col span={8} >
                         <Form.Item
                             labelCol={{ span: 24 }} //whole column
                             name={`fullName`}
