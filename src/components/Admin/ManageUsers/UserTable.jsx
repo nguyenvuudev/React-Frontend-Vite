@@ -232,6 +232,7 @@ const UserTable = () => {
           <Table
             title={renderHeader}
             loading={isLoading}
+            headerSplitColor={"black"}
 
             className="def"
             columns={columns}
