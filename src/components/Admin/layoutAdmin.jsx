@@ -13,7 +13,7 @@ import { Layout, Menu, Dropdown, Space, message, Avatar } from 'antd'
 import { Outlet } from "react-router-dom"
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router'
-import './LayoutAdmin.scss'
+import './layoutAdmin.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import { TfiDrupal } from 'react-icons/tfi'
 import { callLogout } from '../../services/api'
