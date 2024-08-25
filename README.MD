@@ -29,6 +29,7 @@
      "vite": "4.2.0"
 ```
   - Cách cài đặt thư viện:
-    npm install --save-exact react-router-dom@6.9.0 (h) yarn add react-router-dom@6.9.0 
+    dùng npm (h) yarn
+    VD: npm install --save-exact react-router-dom@6.9.0 (h) yarn add react-router-dom@6.9.0 
 
   
