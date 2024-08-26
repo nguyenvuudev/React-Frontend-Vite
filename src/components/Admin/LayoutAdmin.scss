@@ -72,7 +72,7 @@
   .ant-layout-content {
     background: #090111;
 
-    .manage-user-page {
+    .manage-common {
       padding: 20px;
       border-radius: 20px;
       margin: 20px;
@@ -100,14 +100,6 @@
     background-color: #7700c1 !important;
   }
 
-
-
-  .manage-book-page {
-    padding: 20px;
-    background: #000000;
-    border-radius: 20px;
-    margin: 20px;
-  }
 
 .ant-table-thead >tr>th:not(:last-child)::before {
     top: 100% !important;

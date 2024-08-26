@@ -4,7 +4,7 @@ import UserTable from "../../../components/Admin/ManageUsers/UserTable"
 
 const ManageUserPage = () => {
   return (
-    <div className="manage-user-page">
+    <div className="manage-common manage-user-page">
       <UserTable />
     </div>
   )
