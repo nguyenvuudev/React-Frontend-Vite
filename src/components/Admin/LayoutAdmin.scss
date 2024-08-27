@@ -73,25 +73,145 @@
     background: #090111;
 
     .manage-common {
-      padding: 20px;
       border-radius: 20px;
-      margin: 20px;
+      margin: 42px;
 
       .ant-col-24 {
         background: #1d0136;
         border-radius: 20px;
+
+        .ant-form-item-label>label {
+          color: #ffffff;
+        }
+
+        .ant-input {
+          background: #090111;
+          border: none;
+          color: #ffffff;
+
+          &::placeholder {
+            color: #7d7d7d;
+          }
+
+          &:focus {
+            box-shadow: 0 0 0 2px rgb(147 0 255 / 10%);
+            ;
+          }
+        }
+
+        .ant-btn-primary {
+          background: #7700c1;
+          transition: 0.3s ease-in;
+          box-shadow: none;
+
+          &:hover {
+            background: #50006c;
+          }
+        }
+
+        .ant-btn-default {
+          box-shadow: none;
+          border-color: #ffffff;
+          transition: 0.3s ease-in;
+
+          &:hover {
+            color: #000000;
+            background: #c6c6c6;
+          }
+        }
+
+        .ant-btn-ghost {
+          color: #ffffff;
+          font-size: 16px;
+        }
+
+        .ant-btn-dashed {
+          background: #1d924c;
+          border-style: none;
+          color: #ffffff;
+          transition: 0.3s ease-in;
+
+          &:hover {
+            color: #ffffff;
+            background: #24b35d;
+          }
+        }
       }
+
       .ant-table {
         background: #1d0136;
 
-        .ant-table-thead >tr>th {
+        .ant-table-thead>tr>th {
           background: #1d0136;
           border: none;
+          color: #ffffff;
         }
 
-        .ant-table-tbody >tr >td {
+        .ant-table-tbody>tr>td {
           border-bottom: none;
         }
+
+        .ant-table-thead>tr>th:not(:last-child)::before {
+          background-color: #1d0136;
+        }
+
+        .ant-table-column-sorter {
+          color: #ffffff;
+        }
+
+        .ant-table-tbody>tr>td {
+          color: #ffffff;
+          background: #1d0136;
+        }
+
+        .ant-table-row:hover>td {
+          background: #2f0157;
+        }
+
+        .ant-table-column-sorter-up.active {
+          color: #7700c1;
+        }
+
+        .ant-table-column-sorter-down.active {
+          color: #7700c1;
+        }
+
+
+      }
+
+      .ant-pagination-total-text {
+        color: #ffffff;
+      }
+
+      .ant-pagination-item-active {
+        border-color: #7700c1;
+        background: #7700c1;
+
+        a {
+          color: #ffffff;
+        }
+      }
+
+      .ant-pagination-item-link {
+        color: #ffffff;
+      }
+
+      .ant-pagination-item a {
+        color: #ffffff;
+      }
+
+      .ant-pagination-item-ellipsis {
+        color: #ffffff;
+      }
+
+      .ant-select-selector {
+        color: #ffffff;
+        background: #7700c1;
+        border: none;
+      }
+
+      .ant-select-arrow {
+        color: #ffffff;
       }
     }
   }
@@ -100,19 +220,26 @@
     background-color: #7700c1 !important;
   }
 
+  .custom-header-table {
+    display: flex;
+    justify-content: space-between;
+    color: #ffffff;
 
-.ant-table-thead >tr>th:not(:last-child)::before {
-    top: 100% !important;
-    inset-inline-end: 0;
-    width: 1px;
-    height: 1.6em;
-    background-color: #0ed525 !important;
-    transform: translateY(-50%);
-    transition: background-color 0.2s;
-    content: "";
-}
+    .header-table-button {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+  }
 
+  .custom-link {
+    color: #c373fc;
+    transition: 0.2s ease-in;
 
+    &:hover {
+      color: #a322ff;
+    }
+  }
 
   footer.ant-layout-footer {
     background: #090111;

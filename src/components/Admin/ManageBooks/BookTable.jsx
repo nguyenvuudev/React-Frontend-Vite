@@ -14,16 +14,21 @@ const BookTable = () => {
   const [total, setTotal] = useState(0)
 
   const [isLoading, setIsLoading] = useState("")
+  const [filter, setFilter] = useState("")
+  const [sortQuery, setSortQuery] = useState("")
 
   useEffect(() => {
     fetchBook()
-  }, [current, pageSize])
+  }, [current, pageSize, filter, sortQuery])
 
-  const fetchBook = async (searchFilter) => {
+  const fetchBook = async () => {
     setIsLoading(true)
     let query = `current=${current}&pageSize=${pageSize}`
-    if (searchFilter) {
-      query += `&${searchFilter}`
+    if (filter) {
+      query += `&${filter}`
+    }
+    if (sortQuery) {
+      query += `&${sortQuery}`
     }
 
     const res = await callFetchListBook(query)
@@ -42,29 +47,34 @@ const BookTable = () => {
     {
       title: 'Tên sách',
       dataIndex: 'mainText',
+      sorter: true
     },
     {
       title: 'Thể loại',
       dataIndex: 'category',
+      sorter: true
     },
     {
       title: 'Tác giả',
       dataIndex: 'author',
+      sorter: true
     },
     {
       title: 'Giá tiền',
       dataIndex: 'price',
+      sorter: true
     },
     {
       title: 'Ngày cập nhật',
       dataIndex: 'updatedAt',
+      sorter: true
     },
     {
       title: 'Hành động',
     },
   ]
 
-  const onChange = (pagination) => {
+  const onChange = (pagination, filters, sorter) => {
     if (pagination && pagination.current !== current) {
       setCurrent(pagination.current)
     }
@@ -72,16 +82,21 @@ const BookTable = () => {
       setPageSize(pagination.pageSize)
       setCurrent(1)
     }
+
+    if (sorter && sorter.field) {
+      const q = sorter.order === 'ascend' ? `sort=${sorter.field}` : `sort=-${sorter.field}`
+      setSortQuery(q)
+    }
   }
 
   const handleSearch = (query) => {
-    fetchBook(query)
+    setFilter(query)
   }
 
   const renderHeader = () => {
     return (
       <>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div className="custom-header-table">
           <span>Table List Book</span>
           <div style={{ display: 'flex', gap: 15 }}>
             <Button
@@ -96,6 +111,10 @@ const BookTable = () => {
             </Button>
             <Button
               type="ghost"
+              onClick={() => {
+                setFilter("")
+                setSortQuery("")
+              }}
             >
               <ReloadOutlined />
             </Button>
@@ -111,6 +130,7 @@ const BookTable = () => {
         <Col span={24}>
           <InputSearch
             handleSearch={handleSearch}
+            setFilter={setFilter}
           />
         </Col>
         <Col span={24}>

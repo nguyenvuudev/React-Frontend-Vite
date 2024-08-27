@@ -48,7 +48,7 @@ const UserTable = () => {
     setIsLoading(true)
     let query = `current=${current}&pageSize=${pageSize}`
     if (filter) {
-      query += `&${filter}`
+      query += `&${filter}` // lưu trữ giá trị người dùng nhập vào ô tìm kiếm
     }
     if (sortQuery) {
       query += `&${sortQuery}`
@@ -68,7 +68,7 @@ const UserTable = () => {
       dataIndex: '_id',
       render: (text, record, index) => { // record: lấy toàn bộ data trên một hàng
         return (
-          <a href="#" onClick={() => {
+          <a className='custom-link' href="#" onClick={() => {
             setOpenViewDetail(true)
             setDataViewDetail(record)
           }}
@@ -158,7 +158,7 @@ const UserTable = () => {
   const renderHeader = () => {
     return (
       <>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div className='custom-header-table'>
           <span>Table List User</span>
           <span style={{ display: 'flex', gap: 15 }}>
             <Button
@@ -175,15 +175,19 @@ const UserTable = () => {
 
             <Button
               icon={<PlusOutlined />}
-              type="primary"
+              type="dashed"
               onClick={() => setOpenModalCreate(true)}
-            >Thêm mới</Button>
+            >
+              Thêm mới
+
+            </Button>
+
             <Button
-             type='ghost'
+              type='ghost'
               onClick={() => {
-              setFilter("")
-              setSortQuery("")
-            }}>
+                setFilter("")
+                setSortQuery("")
+              }}>
               <ReloadOutlined />
             </Button>
           </span>
