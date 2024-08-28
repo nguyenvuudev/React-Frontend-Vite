@@ -10,12 +10,12 @@ const BookTable = () => {
 
   const [listBook, setListBook] = useState([])
   const [current, setCurrent] = useState(1)
-  const [pageSize, setPageSize] = useState(7)
+  const [pageSize, setPageSize] = useState(5)
   const [total, setTotal] = useState(0)
 
   const [isLoading, setIsLoading] = useState("")
   const [filter, setFilter] = useState("")
-  const [sortQuery, setSortQuery] = useState("")
+  const [sortQuery, setSortQuery] = useState("sort=-updatedAt") // những quyển sách khi mà được thêm mới vào sẽ được đẩy lên đầu tiên
 
   useEffect(() => {
     fetchBook()
@@ -133,20 +133,23 @@ const BookTable = () => {
             setFilter={setFilter}
           />
         </Col>
-        <Col span={24}>
-          <Table
-            loading={isLoading}
-            title={renderHeader}
-            columns={columns}
-            dataSource={listBook}
-            onChange={onChange}
-            pagination={{
-              total: total
-            }}
-          >
+        <div className="custom-table-list">
+          <Col span={24}>
+            <Table
+              loading={isLoading}
+              title={renderHeader}
+              columns={columns}
+              dataSource={listBook}
+              onChange={onChange}
+              pagination={{
+                className: "custom-pagination-table",
+                total: total
+              }}
+            >
 
-          </Table>
-        </Col>
+            </Table>
+          </Col>
+        </div>
       </Row>
     </>
   )

@@ -21,63 +21,65 @@ const InputSearch = (props) => {
 
   return (
     <>
-      <Form
-        form={form}
-        style={{ padding: '24px' }}
-        onFinish={onFinish}
-      >
-        <Row gutter={24} /*24px */>
-          <Col
-            span={8} // chiếm 8/24 gird
-          >
-            <Form.Item
-              labelCol={{ span: 24 }} // chiếm toàn bộ chiều rộng của cột chứa nó
-              label={'Tên sách'}
-              name={'mainText'}
+      <div className="custom-input-search">
+        <Form
+          form={form}
+          style={{ padding: '24px' }}
+          onFinish={onFinish}
+        >
+          <Row gutter={24} /*24px */>
+            <Col
+              span={8} // chiếm 8/24 gird
             >
-              <Input placeholder="tên sách..." />
-            </Form.Item>
-          </Col>
-          <Col
-            span={8} // chiếm 8/24 gird
-          >
-            <Form.Item
-              labelCol={{ span: 24 }} // chiếm toàn bộ chiều rộng của cột chứa nó
-              label={'Tấc giả'}
-              name={'author'}
+              <Form.Item
+                labelCol={{ span: 24 }} // chiếm toàn bộ chiều rộng của cột chứa nó
+                label={'Tên sách'}
+                name={'mainText'}
+              >
+                <Input placeholder="tên sách..." />
+              </Form.Item>
+            </Col>
+            <Col
+              span={8} // chiếm 8/24 gird
             >
-              <Input placeholder="tác giả..." />
-            </Form.Item>
-          </Col>
-          <Col
-            span={8} // chiếm 8/24 gird
-          >
-            <Form.Item
-              labelCol={{ span: 24 }} // chiếm toàn bộ chiều rộng của cột chứa nó
-              label={'Thể loại'}
-              name={'category'}
+              <Form.Item
+                labelCol={{ span: 24 }} // chiếm toàn bộ chiều rộng của cột chứa nó
+                label={'Tấc giả'}
+                name={'author'}
+              >
+                <Input placeholder="tác giả..." />
+              </Form.Item>
+            </Col>
+            <Col
+              span={8} // chiếm 8/24 gird
             >
-              <Input placeholder="thể loại..." />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row>
-          <Col span={24} style={{ textAlign: 'right' }}>
-            <Button
-              type="primary"
-              htmlType="submit"
-            >
-              Tìm kiếm
-            </Button>
-            <Button
-              style={{ margin: '0 8px' }}
-              onClick={() => form.resetFields()}
-            >
-              Xóa
-            </Button>
-          </Col>
-        </Row>
-      </Form>
+              <Form.Item
+                labelCol={{ span: 24 }} // chiếm toàn bộ chiều rộng của cột chứa nó
+                label={'Thể loại'}
+                name={'category'}
+              >
+                <Input placeholder="thể loại..." />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={24} style={{ textAlign: 'right' }}>
+              <Button
+                type="primary"
+                htmlType="submit"
+              >
+                Tìm kiếm
+              </Button>
+              <Button
+                style={{ margin: '0 8px' }}
+                onClick={() => form.resetFields()}
+              >
+                Xóa
+              </Button>
+            </Col>
+          </Row>
+        </Form>
+      </div>
     </>
   )
 }
