@@ -4,11 +4,11 @@ import InputSearch from './InputSearch'
 import { callDeleteUser, callFetchListUser } from '../../../services/api'
 import {
   CloudUploadOutlined,
-  DeleteTwoTone,
+  DeleteFilled ,
   ExportOutlined,
   PlusOutlined,
   ReloadOutlined,
-  EditTwoTone
+  EditFilled 
 } from '@ant-design/icons'
 import { FORMAT_DATE_DISPLAY } from "../../../utils/constant"
 import UserModalCreate from './UserModalCreate'
@@ -23,7 +23,7 @@ import UserModalUpdate from './UserModalUpdate'
 const UserTable = () => {
   const [listUser, setListUser] = useState([])
   const [current, setCurrent] = useState(1) // vị trí trang hiện tại là 1
-  const [pageSize, setPageSize] = useState(7) // lấy ra số phần tử trong 1 trang 
+  const [pageSize, setPageSize] = useState(5) // lấy ra số phần tử trong 1 trang 
   const [total, setTotal] = useState(0)
 
   const [isLoading, setIsLoading] = useState(false)
@@ -118,12 +118,14 @@ const UserTable = () => {
               cancelText="No"
             >
               <span style={{ cursor: "pointer" }}>
-                <DeleteTwoTone twoToneColor="#ff4d4f" />
+                <DeleteFilled
+                className='custom-icon-delete'
+                />
               </span>
             </Popconfirm>
             <span style={{ cursor: "pointer", margin: '0 30px' }}>
-              <EditTwoTone
-                twoToneColor="#f1c40f"
+              <EditFilled 
+                className='custom-icon-edit'
                 onClick={() => {
                   setOpenModalUpdate(true)
                   setDataUpdate(record)
@@ -232,29 +234,32 @@ const UserTable = () => {
             setFilter={setFilter}
           />
         </Col>
-        <Col span={24}>
-          <Table
-            title={renderHeader}
-            loading={isLoading}
-            headerSplitColor={"black"}
+        <div className='custom-table-list'>
+          <Col span={24}>
+            <Table
+              title={renderHeader}
+              loading={isLoading}
+              headerSplitColor={"black"}
 
-            className="def"
-            columns={columns}
-            dataSource={listUser}
-            onChange={onChange}
-            rowKey="_id"
-            pagination={
-              {
-                current: current,
-                pageSize: pageSize,
-                pageSizeOptions: [8, 10, 20, 50, 100],
-                showSizeChanger: true,
-                total: total,
-                showTotal: (total, range) => { return (<div>{range[0]}-{range[1]} trên {total} hàng</div>) }
+              className="def"
+              columns={columns}
+              dataSource={listUser}
+              onChange={onChange}
+              rowKey="_id"
+              pagination={
+                {
+                  className: "custom-pagination-table",
+                  current: current,
+                  pageSize: pageSize,
+                  pageSizeOptions: [5, 10, 20, 50, 100],
+                  showSizeChanger: true,
+                  total: total,
+                  showTotal: (total, range) => { return (<div>{range[0]}-{range[1]} trên {total} hàng</div>) }
+                }
               }
-            }
-          />
-        </Col>
+            />
+          </Col>
+        </div>
       </Row>
 
       <UserModalCreate
