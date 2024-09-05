@@ -4,18 +4,23 @@ import { callFetchListBook } from "../../../services/api"
 import Button from "antd/es/button"
 import { ReloadOutlined } from "@ant-design/icons"
 import InputSearch from "./InputSearch"
+import { render } from "react-dom"
+import BookViewDetail from "./BookViewDetail"
 
 
 const BookTable = () => {
 
   const [listBook, setListBook] = useState([])
   const [current, setCurrent] = useState(1)
-  const [pageSize, setPageSize] = useState(5)
+  const [pageSize, setPageSize] = useState(6)
   const [total, setTotal] = useState(0)
 
   const [isLoading, setIsLoading] = useState("")
   const [filter, setFilter] = useState("")
   const [sortQuery, setSortQuery] = useState("sort=-updatedAt") // những quyển sách khi mà được thêm mới vào sẽ được đẩy lên đầu tiên
+
+  const [openViewDetail, setOpenViewDetail] = useState(false)
+  const [dataViewDetail, setDataViewDetail] = useState("")
 
   useEffect(() => {
     fetchBook()
@@ -43,6 +48,15 @@ const BookTable = () => {
     {
       title: 'Id',
       dataIndex: '_id',
+      render: (text, record, index) => {
+        return (
+          <a className='custom-link' href="#" onClick={() => {
+            setOpenViewDetail(true)
+            setDataViewDetail(record)
+          }}
+          >{record._id}</a>
+        )
+      }
     },
     {
       title: 'Tên sách',
@@ -62,7 +76,12 @@ const BookTable = () => {
     {
       title: 'Giá tiền',
       dataIndex: 'price',
-      sorter: true
+      sorter: true,
+      render: (text, record, index) => {
+        return (
+          <>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(record.price)}</>
+        )
+      }
     },
     {
       title: 'Ngày cập nhật',
@@ -74,7 +93,7 @@ const BookTable = () => {
     },
   ]
 
-  const onChange = (pagination, filters, sorter) => {
+  const onChange = (pagination, filters, sorter, extra) => {
     if (pagination && pagination.current !== current) {
       setCurrent(pagination.current)
     }
@@ -151,6 +170,13 @@ const BookTable = () => {
           </Col>
         </div>
       </Row>
+
+      <BookViewDetail
+        openViewDetail={openViewDetail}
+        setOpenViewDetail={setOpenViewDetail}
+        dataViewDetail={dataViewDetail}
+        setDataViewDetail={setDataViewDetail}
+      />
     </>
   )
 }
