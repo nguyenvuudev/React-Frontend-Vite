@@ -1,3 +1,13 @@
+:root {
+  --background: #1d0136;
+  --black: #000000;
+  --white: #ffffff;
+  --yellow: #ffff00;
+  --purple: #7700c1;
+  --gray: #7d7d7d;
+
+}
+
 .layout-admin {
   .admin-header {
     height: 80px;
@@ -111,6 +121,7 @@
 
         .ant-btn-default {
           box-shadow: none;
+          border: none;
           border-color: #ffffff;
           transition: 0.3s ease-in;
           font-size: 0.813rem;
@@ -118,7 +129,7 @@
 
           &:hover {
             color: #000000;
-            background: #c6c6c6;
+            background: #adadad;
           }
         }
 
@@ -306,3 +317,28 @@
     color: #ffffff;
   }
 }
+
+    // // outside
+    // .ant-drawer-wrapper-body {
+    //   background: #1d0136;
+
+    //   .ant-drawer-header {
+    //     border-bottom: 1px solid #b4b3b3;
+
+    //     .ant-drawer-close {
+    //       color: #ffffff;
+    //     }
+
+    //     .ant-drawer-title {
+    //       color: #ffffff;
+    //     }
+    //   }
+
+    //   .ant-descriptions-title {
+    //     color: var(--white);
+    //   }
+
+    //   .ant-descriptions-view {
+    //     border: #ffffffab;
+    //   }
+    // }

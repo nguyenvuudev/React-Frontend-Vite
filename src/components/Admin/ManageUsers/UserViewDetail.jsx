@@ -19,7 +19,7 @@ const UserViewDetail = (props) => {
         open={openViewDetail}
       >
         <Descriptions
-          title="Thông tin user"
+          title="Thông tin người dùng"
           bordered
           column={2}
         >
@@ -31,10 +31,10 @@ const UserViewDetail = (props) => {
           <Descriptions.Item label="Role" span={2}>
             <Badge status="processing" text={dataViewDetail?.role} />
           </Descriptions.Item>
-          <Descriptions.Item label="Created At">
+          <Descriptions.Item label="Ngày tạo">
             {moment(dataViewDetail?.createdAt).format(FORMAT_DATE_DISPLAY)}
           </Descriptions.Item>
-          <Descriptions.Item label="Updated At">
+          <Descriptions.Item label="Ngày cập nhật">
             {moment(dataViewDetail?.updatedAt).format(FORMAT_DATE_DISPLAY)}
           </Descriptions.Item>
         </Descriptions>
