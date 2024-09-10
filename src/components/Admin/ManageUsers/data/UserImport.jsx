@@ -132,13 +132,13 @@ const UserImport = (props) => {
           <p className="ant-upload-text">Chọn hoặc kéo tệp vào khu vực này để tải lên</p>
           <p className="ant-upload-hint">
             Hỗ trợ cho một lần tải lên. Chỉ chấp nhận các file có đuôi .csv, .xls, .xlsx
-            &nbsp; <a onClick={e => e.stopPropagation() /*stopPropagation: ngăn chặn mở upload file*/}
+            &nbsp; <a className='custom-link' onClick={e => e.stopPropagation() /*stopPropagation: ngăn chặn mở upload file*/}
               href={templateFile} download> Click vào đây để tải file mẫu</a>
           </p>
         </Dragger>
-        <div style={{ paddingTop: 20 }}>
+        <div style={{ paddingTop: 25 }}>
           <Table
-            title={() => <span>Dữ liệu tải lên:</span>}
+            title={() => <span>Dữ liệu tải lên</span>}
             columns={columns}
             dataSource={dataExcel}
             pagination={{

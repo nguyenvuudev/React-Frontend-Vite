@@ -161,7 +161,7 @@ const UserTable = () => {
     return (
       <>
         <div className='custom-header-table'>
-          <span>Table List User</span>
+          <span>Danh mục người dùng</span>
           <span style={{ display: 'flex', gap: 15 }}>
             <Button
               icon={<ExportOutlined />}
