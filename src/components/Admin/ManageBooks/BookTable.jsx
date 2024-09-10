@@ -116,7 +116,7 @@ const BookTable = () => {
     return (
       <>
         <div className="custom-header-table">
-          <span>Table List Book</span>
+          <span>Danh mục sách</span>
           <div style={{ display: 'flex', gap: 15 }}>
             <Button
               type="primary"

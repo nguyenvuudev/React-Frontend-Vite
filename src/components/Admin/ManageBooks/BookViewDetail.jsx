@@ -1,6 +1,6 @@
-import { isRejected } from "@reduxjs/toolkit"
 import { Descriptions, Divider, Drawer, Modal, Upload } from "antd"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { v4 as uuidv4 } from 'uuid'
 
 
 const BookViewDetail = (props) => {
@@ -11,59 +11,47 @@ const BookViewDetail = (props) => {
     setDataViewDetail(null)
   }
 
-  const getBase64 = (file) =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
+  const [previewOpen, setPreviewOpen] = useState(false)
+  const [previewImage, setPreviewImage] = useState('')
+  const [previewTitle, setPreviewTitle] = useState('')
+  const [fileList, setFileList] = useState([])
 
-  const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState('');
-  const [previewTitle, setPreviewTitle] = useState('');
-  const [fileList, setFileList] = useState([
-    {
-      uid: '-1',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },
-    {
-      uid: '-2',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },
-    {
-      uid: '-3',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },
-    {
-      uid: '-4',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+  useEffect(() => { 
+    if (dataViewDetail) {
+      let imgThumbnail = {}, imgSlider = []
+      if (dataViewDetail.thumbnail) {
+        imgThumbnail = {
+          uid: uuidv4(), // chuyển thành một chuỗi ký tự dài 128 bit
+          name: dataViewDetail.thumbnail,
+          status: 'done',
+          url: `${import.meta.env.VITE_BACKEND_URL}/images/book/${dataViewDetail.thumbnail}`
+        }
+      }
+      if (dataViewDetail.slider && dataViewDetail.slider.length > 0) {
+        dataViewDetail.slider.map(item => {
+          imgSlider.push({
+            uid: uuidv4, // chuyển thành một chuỗi ký tự dài 128 bit
+            name: item,
+            status: 'done',
+            url: `${import.meta.env.VITE_BACKEND_URL}/images/book/${item}`
+          })
+        })
+      }
+      setFileList([imgThumbnail, ...imgSlider])
     }
-  ]);
+  }, [dataViewDetail])
 
-  const handleCancel = () => setPreviewOpen(false);
+  const handleCancel = () => setPreviewOpen(false)
 
   const handlePreview = async (file) => {
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj);
-    }
-    setPreviewImage(file.url || (file.preview));
-    setPreviewOpen(true);
-    setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
-  };
-
-  const handleChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
+    setPreviewImage(file.url)
+    setPreviewOpen(true)
+    setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1))
   }
 
+  const handleChange = ({ fileList: newFileList }) => {
+    setFileList(newFileList)
+  }
 
   return (
     <>
@@ -88,7 +76,7 @@ const BookViewDetail = (props) => {
           <Descriptions.Item label="Ngày cập nhật">{dataViewDetail?.updatedAt}</Descriptions.Item>
         </Descriptions>
 
-        <Divider orientation="left">Ảnh sách</Divider>
+        <Divider orientation="left">Hình ảnh</Divider>
 
         <Upload
           action="https://www.mocky.io/v2/5cc8019d300000980a055e76"

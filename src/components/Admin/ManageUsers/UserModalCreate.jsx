@@ -4,7 +4,7 @@ import { callCreateUser } from "../../../services/api"
 
 const UserModalCreate = (props) => {
   const { openModalCreate, setOpenModalCreate } = props
-  
+
   const [isSubmit, setIsSubmit] = useState(false)
 
   const [form] = Form.useForm()
@@ -35,11 +35,14 @@ const UserModalCreate = (props) => {
         okText="Tạo mới"
         cancelText="Hủy"
         onOk={() => { form.submit() }}
-        onCancel={() => setOpenModalCreate(false)}
+        onCancel={() => {
+          setOpenModalCreate(false)
+          form.resetFields()
+        }}
         confirmLoading={isSubmit}
         maskClosable={false}
       >
-        <Divider />
+        <Divider style={{ background: "#463655" }} />
 
         <Form
           form={form}
