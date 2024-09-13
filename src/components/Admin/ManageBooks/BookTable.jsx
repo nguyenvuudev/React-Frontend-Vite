@@ -4,8 +4,8 @@ import { callFetchListBook } from "../../../services/api"
 import Button from "antd/es/button"
 import { ReloadOutlined } from "@ant-design/icons"
 import InputSearch from "./InputSearch"
-import { render } from "react-dom"
 import BookViewDetail from "./BookViewDetail"
+import BookModalCreate from "./BookModalCreate"
 
 
 const BookTable = () => {
@@ -18,6 +18,8 @@ const BookTable = () => {
   const [isLoading, setIsLoading] = useState("")
   const [filter, setFilter] = useState("")
   const [sortQuery, setSortQuery] = useState("sort=-updatedAt") // những quyển sách khi mà được thêm mới vào sẽ được đẩy lên đầu tiên
+
+  const [openModalCreate, setOpenModalCreate] = useState(false)
 
   const [openViewDetail, setOpenViewDetail] = useState(false)
   const [dataViewDetail, setDataViewDetail] = useState("")
@@ -121,12 +123,13 @@ const BookTable = () => {
             <Button
               type="primary"
             >
-              Thêm mới
+              Xuất
             </Button>
             <Button
-              type="primary"
+              type="dashed"
+              onClick={() => setOpenModalCreate(true)}
             >
-              Xuất
+              Thêm mới
             </Button>
             <Button
               type="ghost"
@@ -170,6 +173,12 @@ const BookTable = () => {
           </Col>
         </div>
       </Row>
+
+      <BookModalCreate
+        openModalCreate={openModalCreate}
+        setOpenModalCreate={setOpenModalCreate}
+        fetchBook={fetchBook}
+      />
 
       <BookViewDetail
         openViewDetail={openViewDetail}

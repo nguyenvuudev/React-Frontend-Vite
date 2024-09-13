@@ -41,6 +41,14 @@ export const callUpdateUser = (_id, fullName, email, phone) => {
   return axios.put('/api/v1/user', { _id, fullName, email, phone })
 }
 
-export const callFetchListBook =(query) => {
+export const callCreateBook = (mainText, author, price, category, quantity, sold, thumbnail, slider) => {
+  return axios.post('/api/v1/book', { mainText, author, price, category, quantity, sold, thumbnail, slider })
+}
+
+export const callFetchListBook = (query) => {
   return axios.get(`/api/v1/book?${query}`)
+}
+
+export const callFetchCategory = () => {
+  return axios.get('/api/v1/database/category')
 }

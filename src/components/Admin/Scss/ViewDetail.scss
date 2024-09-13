@@ -1,0 +1,47 @@
+.ant-drawer-wrapper-body {
+  background: #1d0136;
+
+  .ant-drawer-header {
+    border-bottom: 1px solid #b0b0b0;
+
+    .ant-drawer-close {
+      color: #ffffff;
+    }
+
+    .ant-drawer-title {
+      color: #ffffff;
+    }
+  }
+
+  .ant-divider-with-text {
+    color: #ffffff;
+    border-block-start: 0 #ffffff;
+    margin: 24px 0;
+  }
+
+  .ant-descriptions-title {
+    color: #ffffff;
+  }
+
+  .ant-descriptions-view {
+    border: 1px solid #382848 !important;
+
+    .ant-descriptions-row {
+      border-bottom: 1px solid #382848;
+
+      .ant-descriptions-item-label {
+        color: #ffffff;
+        background-color: #00000017;
+      }
+
+      .ant-descriptions-item-content {
+        color: #ffffff;
+        border-inline-end: 1px solid #382848;
+
+        .ant-badge-status-text {
+          color: #ffff00;
+        }
+      }
+    }
+  }
+}
