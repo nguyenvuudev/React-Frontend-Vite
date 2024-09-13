@@ -4,11 +4,11 @@ import InputSearch from './InputSearch'
 import { callDeleteUser, callFetchListUser } from '../../../services/api'
 import {
   CloudUploadOutlined,
-  DeleteFilled ,
+  DeleteFilled,
   ExportOutlined,
   PlusOutlined,
   ReloadOutlined,
-  EditFilled 
+  EditFilled
 } from '@ant-design/icons'
 import { FORMAT_DATE_DISPLAY } from "../../../utils/constant"
 import UserModalCreate from './UserModalCreate'
@@ -17,8 +17,7 @@ import moment from 'moment'
 import UserImport from './data/UserImport'
 import * as XLSX from 'xlsx'
 import UserModalUpdate from './UserModalUpdate'
-
-
+import '../Scss/ViewDetail.scss'
 
 const UserTable = () => {
   const [listUser, setListUser] = useState([])
@@ -119,12 +118,12 @@ const UserTable = () => {
             >
               <span style={{ cursor: "pointer" }}>
                 <DeleteFilled
-                className='custom-icon-delete'
+                  className='custom-icon-delete'
                 />
               </span>
             </Popconfirm>
             <span style={{ cursor: "pointer", margin: '0 30px' }}>
-              <EditFilled 
+              <EditFilled
                 className='custom-icon-edit'
                 onClick={() => {
                   setOpenModalUpdate(true)
