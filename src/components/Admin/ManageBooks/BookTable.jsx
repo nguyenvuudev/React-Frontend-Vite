@@ -6,7 +6,8 @@ import { ReloadOutlined } from "@ant-design/icons"
 import InputSearch from "./InputSearch"
 import BookViewDetail from "./BookViewDetail"
 import BookModalCreate from "./BookModalCreate"
-
+import '../Scss/ViewDetail.scss'
+import '../Scss/ModalCommon.scss'
 
 const BookTable = () => {
 
