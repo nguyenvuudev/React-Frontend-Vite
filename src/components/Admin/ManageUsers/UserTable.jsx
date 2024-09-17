@@ -18,6 +18,7 @@ import UserImport from './data/UserImport'
 import * as XLSX from 'xlsx'
 import UserModalUpdate from './UserModalUpdate'
 import '../Scss/ViewDetail.scss'
+import '../Scss/ModalCommon.scss'
 
 const UserTable = () => {
   const [listUser, setListUser] = useState([])

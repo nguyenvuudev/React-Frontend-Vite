@@ -1,6 +1,6 @@
 import { Col, Divider, Form, Input, InputNumber, message, Modal, Row, Select, Upload } from "antd"
 import { useEffect, useState } from "react"
-import { callCreateUser, callFetchCategory, callFetchListBook } from "../../../services/api"
+import { callFetchCategory, callUploadBookImg } from "../../../services/api"
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons"
 
 const BookModalCreate = (props) => {
@@ -14,6 +14,17 @@ const BookModalCreate = (props) => {
 
   const [loadingThumbnail, setLoadingThumbnail] = useState(false)
   const [loadingSlider, setLoadingSlider] = useState(false)
+
+  const [dataThumbnail, setDataThumbnail] = useState([])
+  const [dataSlider, setDataSlider] = useState([])
+
+  // console.log("nvd-dataThumbnail", dataThumbnail);
+  // console.log("nvd-dataSlider", dataSlider);
+
+  const [openPreview, setOpenPreview] = useState(false)
+  const [previewImage, setPreviewImage] = useState("")
+  const [previewTitle, setPreviewTitle] = useState("")
+
 
   const [imageUrl, setImageUrl] = useState("")
 
@@ -79,10 +90,41 @@ const BookModalCreate = (props) => {
     }
   }
 
-  const handleUploadFile = ({ file, onSuccess, onError }) => {
-    setTimeout(() => {
-      onSuccess("ok")
-    }, 1000)
+  const handleUploadFileThumbnail = async ({ file, onSuccess, onError }) => {
+    const res = await callUploadBookImg(file)
+    if (res && res.data) {
+      console.log("nvd-res:", res);
+      console.log("nvd-file:", file);
+      setDataThumbnail([{
+        name: res.data.fileUploaded,
+        uid: file.uid
+      }])
+      onSuccess('ok')
+    } else {
+      onError('Đã có lỗi khi tải file lên!')
+    }
+  }
+
+  const handleUploadFileSlider = async ({ file, onSuccess, onError }) => {
+    const res = await callUploadBookImg(file)
+    if (res && res.data) {
+      //sao chép trạng thái trước đó => upload nhiều ảnh
+      setDataSlider((dataSlider) => [...dataSlider, {
+        name: res.data.fileUploaded,
+        uid: file.uid
+      }])
+      onSuccess('ok')
+    } else {
+      onError('Đã có lỗi khi tải file lên!')
+    }
+  }
+
+  const handlePreview = (file) => {
+    getBase64(file.originFileObj, (url) => {
+      setPreviewImage(url)
+      setOpenPreview(true)
+      setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1))
+    })
   }
 
   return (
@@ -232,9 +274,10 @@ const BookModalCreate = (props) => {
                   className="avatar-uploader"
                   maxCount={1}
                   multiple={false}
-                  customRequest={handleUploadFile}
+                  customRequest={handleUploadFileThumbnail}
                   beforeUpload={beforeUpload}
                   onChange={handleChange}
+                  onPreview={handlePreview}
                 >
                   <div>
                     {loadingThumbnail ? <LoadingOutlined /> : <PlusOutlined />}
@@ -255,9 +298,10 @@ const BookModalCreate = (props) => {
                   listType="picture-card"
                   className="avatar-uploader"
                   multiple
-                  customRequest={handleUploadFile}
+                  customRequest={handleUploadFileSlider}
                   beforeUpload={beforeUpload}
                   onChange={(info) => handleChange(info, 'slider')}
+                  onPreview={handlePreview}
                 >
                   <div>
                     {loadingSlider ? <LoadingOutlined /> : <PlusOutlined />}
@@ -270,6 +314,16 @@ const BookModalCreate = (props) => {
           </Row>
         </Form>
       </Modal >
+      <Modal
+        open={openPreview}
+        title={previewTitle}
+        footer={null}
+        onCancel={() => {
+          setOpenPreview(false)
+        }}
+      >
+        <img alt="example" style={{ width: '100%' }} src={previewImage} />
+      </Modal>
     </>
   )
 }
