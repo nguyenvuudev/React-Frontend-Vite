@@ -1,6 +1,8 @@
-import { Descriptions, Divider, Drawer, Modal, Upload } from "antd"
+import { Badge, Descriptions, Divider, Drawer, Modal, Upload } from "antd"
 import { useEffect, useState } from "react"
 import { v4 as uuidv4 } from 'uuid'
+import { FORMAT_DATE_DISPLAY } from "../../../utils/constant"
+import moment from "moment"
 
 
 const BookViewDetail = (props) => {
@@ -11,12 +13,12 @@ const BookViewDetail = (props) => {
     setDataViewDetail(null)
   }
 
-  const [previewOpen, setPreviewOpen] = useState(false)
+  const [openPreview, setOpenPreview] = useState(false)
   const [previewImage, setPreviewImage] = useState('')
   const [previewTitle, setPreviewTitle] = useState('')
   const [fileList, setFileList] = useState([])
 
-  useEffect(() => { 
+  useEffect(() => {
     if (dataViewDetail) {
       let imgThumbnail = {}, imgSlider = []
       if (dataViewDetail.thumbnail) {
@@ -41,11 +43,11 @@ const BookViewDetail = (props) => {
     }
   }, [dataViewDetail])
 
-  const handleCancel = () => setPreviewOpen(false)
+  const handleCancel = () => setOpenPreview(false)
 
   const handlePreview = async (file) => {
     setPreviewImage(file.url)
-    setPreviewOpen(true)
+    setOpenPreview(true)
     setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1))
   }
 
@@ -69,11 +71,18 @@ const BookViewDetail = (props) => {
           <Descriptions.Item label="Id">{dataViewDetail?._id}</Descriptions.Item>
           <Descriptions.Item label="Tên sách">{dataViewDetail?.mainText}</Descriptions.Item>
           <Descriptions.Item label="Tác giả">{dataViewDetail?.author}</Descriptions.Item>
-          <Descriptions.Item label="Giá tiền">{dataViewDetail?.price}</Descriptions.Item>
-          <Descriptions.Item label="Thể loại">{dataViewDetail?.category}</Descriptions.Item>
-          <Descriptions.Item label="Số lượng">{dataViewDetail?.quantity}</Descriptions.Item>
-          <Descriptions.Item label="Ngày tạo">{dataViewDetail?.createdAt}</Descriptions.Item>
-          <Descriptions.Item label="Ngày cập nhật">{dataViewDetail?.updatedAt}</Descriptions.Item>
+          <Descriptions.Item label="Giá tiền">{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(dataViewDetail?.price ?? 0)}</Descriptions.Item>
+          <Descriptions.Item label="Số lượng">{dataViewDetail?.quantity ?? 0}</Descriptions.Item>
+          <Descriptions.Item label="Đã bán">{dataViewDetail?.sold ?? 0}</Descriptions.Item>
+          <Descriptions.Item label="Thể loại" span={2}>
+            <Badge status="processing" text={dataViewDetail?.category} />
+          </Descriptions.Item>
+          <Descriptions.Item label="Ngày tạo">
+            {moment(dataViewDetail?.createdAt).format(FORMAT_DATE_DISPLAY)}
+          </Descriptions.Item>
+          <Descriptions.Item label="Ngày cập nhật">
+            {moment(dataViewDetail?.updatedAt).format(FORMAT_DATE_DISPLAY)}
+          </Descriptions.Item>
         </Descriptions>
 
         <Divider orientation="left">Hình ảnh</Divider>
@@ -91,7 +100,7 @@ const BookViewDetail = (props) => {
 
         </Upload>
         <Modal
-          open={previewOpen}
+          open={openPreview}
           title={previewTitle}
           footer={null}
           onCancel={handleCancel}

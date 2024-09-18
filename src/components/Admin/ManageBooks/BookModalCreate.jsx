@@ -1,6 +1,6 @@
-import { Col, Divider, Form, Input, InputNumber, message, Modal, Row, Select, Upload } from "antd"
+import { Col, Divider, Form, Input, InputNumber, message, Modal, notification, Row, Select, Upload } from "antd"
 import { useEffect, useState } from "react"
-import { callFetchCategory, callUploadBookImg } from "../../../services/api"
+import { callFetchCategory, callUploadBookImg, callCreateBook } from "../../../services/api"
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons"
 
 const BookModalCreate = (props) => {
@@ -18,8 +18,8 @@ const BookModalCreate = (props) => {
   const [dataThumbnail, setDataThumbnail] = useState([])
   const [dataSlider, setDataSlider] = useState([])
 
-  // console.log("nvd-dataThumbnail", dataThumbnail);
-  // console.log("nvd-dataSlider", dataSlider);
+  console.log("nvd-dataThumbnail", dataThumbnail)
+  console.log("nvd-dataSlider", dataSlider)
 
   const [openPreview, setOpenPreview] = useState(false)
   const [previewImage, setPreviewImage] = useState("")
@@ -42,12 +42,33 @@ const BookModalCreate = (props) => {
   }, [])
 
   const onFinish = async (values) => {
-    const { mainText, author, price, category, quantity, sold, thumbnail, slider } = values
+    const { mainText, author, price, sold, quantity, category } = values
+    if (dataThumbnail.length === 0) {
+      notification.error({
+        message: 'Lỗi validate',
+        description: 'Vui lòng upload ảnh thumbnail'
+      })
+      return
+    }
+
+    if (dataSlider.length === 0) {
+      notification.error({
+        message: 'Lỗi validate',
+        description: 'Vui lòng upload ảnh slider'
+      })
+      return
+    }
+    
+    const thumbnail = dataThumbnail[0].name
+    const slider = dataSlider.map(item => item.name)
+
     setIsSubmit(true)
-    const res = callCreateBook(mainText, author, price, category, quantity, sold, thumbnail, slider)
+    const res = await callCreateBook(mainText, author, price, category, quantity, sold, thumbnail, slider)
     if (res && res.data) {
-      message.success("Tạo sách mới thành công!")
+      message.success('Tạo mới book thành công')
       form.resetFields()
+      setDataSlider([])
+      setDataThumbnail([])
       setOpenModalCreate(false)
       await props.fetchBook()
     } else {
@@ -93,8 +114,8 @@ const BookModalCreate = (props) => {
   const handleUploadFileThumbnail = async ({ file, onSuccess, onError }) => {
     const res = await callUploadBookImg(file)
     if (res && res.data) {
-      console.log("nvd-res:", res);
-      console.log("nvd-file:", file);
+      console.log("nvd-res:", res)
+      console.log("nvd-file:", file)
       setDataThumbnail([{
         name: res.data.fileUploaded,
         uid: file.uid
