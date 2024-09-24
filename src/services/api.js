@@ -65,4 +65,8 @@ export const callUploadBookImg = (fileImg) => {
       "upload-type": "book"
     },
   })
-} 
+}
+
+export const callUpdateBook = (_id, mainText, author, price, category, quantity, sold, thumbnail, slider) => {
+  return axios.put(`/api/v1/book/${_id}`, { mainText, author, price, category, quantity, sold, thumbnail, slider })
+}

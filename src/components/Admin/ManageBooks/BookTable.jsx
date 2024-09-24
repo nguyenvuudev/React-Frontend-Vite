@@ -2,12 +2,15 @@ import { Col, Row, Table } from "antd"
 import { useEffect, useState } from "react"
 import { callFetchListBook } from "../../../services/api"
 import Button from "antd/es/button"
-import { ReloadOutlined } from "@ant-design/icons"
+import { DeleteFilled, EditFilled, ReloadOutlined } from "@ant-design/icons"
 import InputSearch from "./InputSearch"
 import BookViewDetail from "./BookViewDetail"
 import BookModalCreate from "./BookModalCreate"
 import '../Scss/ViewDetail.scss'
 import '../Scss/ModalCommon.scss'
+import moment from "moment"
+import { FORMAT_DATE_DISPLAY } from "../../../utils/constant"
+import BookModalUpdate from "./BookModalUpdate"
 
 const BookTable = () => {
 
@@ -21,6 +24,9 @@ const BookTable = () => {
   const [sortQuery, setSortQuery] = useState("sort=-updatedAt") // những quyển sách khi mà được thêm mới vào sẽ được đẩy lên đầu tiên
 
   const [openModalCreate, setOpenModalCreate] = useState(false)
+
+  const [openModalUpdate, setOpenModalUpdate] = useState(false)
+  const [dataUpdate, setDataUpdate] = useState(null)
 
   const [openViewDetail, setOpenViewDetail] = useState(false)
   const [dataViewDetail, setDataViewDetail] = useState("")
@@ -89,10 +95,37 @@ const BookTable = () => {
     {
       title: 'Ngày cập nhật',
       dataIndex: 'updatedAt',
-      sorter: true
+      sorter: true,
+      render: (text, record, index) => {
+        return (
+          <>
+            {moment(record.updatedAt).format(FORMAT_DATE_DISPLAY)}
+          </>
+        )
+      }
     },
     {
       title: 'Hành động',
+      render: (text, record, index) => {
+        return (
+          <>
+            <span style={{ cursor: "pointer" }}>
+              <DeleteFilled
+                className='custom-icon-delete'
+              />
+            </span>
+            <span style={{ cursor: "pointer", margin: "0 30px" }}>
+              <EditFilled
+                className='custom-icon-edit'
+                onClick={() => {
+                  setOpenModalUpdate(true)
+                  setDataUpdate(record)
+                }}
+              />
+            </span>
+          </>
+        )
+      }
     },
   ]
 
@@ -186,6 +219,12 @@ const BookTable = () => {
         setOpenViewDetail={setOpenViewDetail}
         dataViewDetail={dataViewDetail}
         setDataViewDetail={setDataViewDetail}
+      />
+      <BookModalUpdate
+        openModalUpdate={openModalUpdate}
+        setOpenModalUpdate={setOpenModalUpdate}
+        dataUpdate={dataUpdate}
+        setDataUpdate={setDataUpdate}
       />
     </>
   )
