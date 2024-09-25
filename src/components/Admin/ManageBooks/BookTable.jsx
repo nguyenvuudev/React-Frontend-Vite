@@ -1,8 +1,8 @@
-import { Col, Row, Table } from "antd"
+import { Col, message, notification, Popconfirm, Row, Table } from "antd"
 import { useEffect, useState } from "react"
-import { callFetchListBook } from "../../../services/api"
+import { callDeleteBook, callFetchListBook } from "../../../services/api"
 import Button from "antd/es/button"
-import { DeleteFilled, EditFilled, ReloadOutlined } from "@ant-design/icons"
+import { DeleteFilled, EditFilled, ExportOutlined, PlusOutlined, ReloadOutlined } from "@ant-design/icons"
 import InputSearch from "./InputSearch"
 import BookViewDetail from "./BookViewDetail"
 import BookModalCreate from "./BookModalCreate"
@@ -11,6 +11,7 @@ import '../Scss/ModalCommon.scss'
 import moment from "moment"
 import { FORMAT_DATE_DISPLAY } from "../../../utils/constant"
 import BookModalUpdate from "./BookModalUpdate"
+import * as XLSX from 'xlsx'
 
 const BookTable = () => {
 
@@ -109,11 +110,20 @@ const BookTable = () => {
       render: (text, record, index) => {
         return (
           <>
-            <span style={{ cursor: "pointer" }}>
-              <DeleteFilled
-                className='custom-icon-delete'
-              />
-            </span>
+            <Popconfirm
+              placement="leftTop"
+              title="Xác nhận xóa sách"
+              description="Bạn có chắc chắn muốn xóa sách này không?"
+              onConfirm={() => handleDeleteBook(record._id)}
+              okText="Có"
+              cancelText="Không"
+            >
+              <span style={{ cursor: "pointer" }}>
+                <DeleteFilled
+                  className='custom-icon-delete'
+                />
+              </span>
+            </Popconfirm>
             <span style={{ cursor: "pointer", margin: "0 30px" }}>
               <EditFilled
                 className='custom-icon-edit'
@@ -126,7 +136,7 @@ const BookTable = () => {
           </>
         )
       }
-    },
+    }
   ]
 
   const onChange = (pagination, filters, sorter, extra) => {
@@ -148,6 +158,18 @@ const BookTable = () => {
     setFilter(query)
   }
 
+  const handleDeleteBook = async (bookId) => {
+    const res = await callDeleteBook(bookId)
+    if (res && res.data) {
+      message.success("Xóa sách thành công")
+      fetchBook()
+    } else {
+      notification.error({
+        message: "Có lỗi xảy ra",
+        description: res.message
+      })
+    }
+  }
   const renderHeader = () => {
     return (
       <>
@@ -155,11 +177,14 @@ const BookTable = () => {
           <span>Danh mục sách</span>
           <div style={{ display: 'flex', gap: 15 }}>
             <Button
+              icon={<ExportOutlined />}
               type="primary"
+              onClick={() => handleExport()}
             >
               Xuất
             </Button>
             <Button
+              icon={<PlusOutlined />}
               type="dashed"
               onClick={() => setOpenModalCreate(true)}
             >
@@ -179,6 +204,19 @@ const BookTable = () => {
       </>
     )
   }
+
+  const handleExport = () => {
+    if (listBook.length > 0) {
+      // Loại bỏ các trường thumbnail và slider khỏi từng phần tử trong listBook
+      const modifiedListBook = listBook.map(({ thumbnail, slider, ...rest }) => rest)
+
+      const workSheet = XLSX.utils.json_to_sheet(modifiedListBook) // Chuyển đổi dữ liệu json sang sheet(bảng tính)
+      const workBook = XLSX.utils.book_new() // Tạo ra một book mới tương đương với một file Excel
+      XLSX.utils.book_append_sheet(workBook, workSheet, "Sheet1") // Thêm workSheet vừa tạo vào workBook
+      XLSX.writeFile(workBook, "DataBookExcel.xlsx") // Ghi workBook ra file với tên DataExcel.xlsx
+    }
+  }
+
 
   return (
     <>
@@ -225,6 +263,7 @@ const BookTable = () => {
         setOpenModalUpdate={setOpenModalUpdate}
         dataUpdate={dataUpdate}
         setDataUpdate={setDataUpdate}
+        fetchBook={fetchBook}
       />
     </>
   )

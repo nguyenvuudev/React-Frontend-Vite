@@ -111,11 +111,11 @@ const UserTable = () => {
           <>
             <Popconfirm
               placement="leftTop"
-              title={"Xác nhận xóa user"}
-              description={"Bạn có chắc chắn muốn xóa user này không?"}
+              title="Xác nhận xóa user"
+              description="Bạn có chắc chắn muốn xóa user này không?"
               onConfirm={() => handleDeleteUser(record._id)}
-              okText="Yes"
-              cancelText="No"
+              okText="Có"
+              cancelText="Không"
             >
               <span style={{ cursor: "pointer" }}>
                 <DeleteFilled
@@ -205,7 +205,7 @@ const UserTable = () => {
   const handleDeleteUser = async (userId) => {
     const res = await callDeleteUser(userId)
     if (res && res.data) {
-      message.success('Xóa user thành công')
+      message.success('Xóa người dùng thành công')
       fetchUser()
     } else {
       notification.error({
@@ -221,7 +221,7 @@ const UserTable = () => {
       const workSheet = XLSX.utils.json_to_sheet(listUser) // Chuyển đổi dữ liệu json sang sheet(bảng tính)
       const workBook = XLSX.utils.book_new() // Tạo ra một book mới tương đương với một file Excel
       XLSX.utils.book_append_sheet(workBook, workSheet, "Sheet1") // Thêm wokSheet vừa tạo vào workBook
-      XLSX.writeFile(workBook, "DataExcel.xlsx") // Ghi workBook ra file với tên DataExcel.xlsx
+      XLSX.writeFile(workBook, "DataUserExcel.xlsx") // Ghi workBook ra file với tên DataExcel.xlsx
     }
   }
 
