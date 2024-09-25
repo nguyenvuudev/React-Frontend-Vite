@@ -44,7 +44,7 @@ const BookModalUpdate = (props) => {
     if (dataUpdate?._id) {
       const arrThumbnail = [{
         uid: uuidv4(),
-        name: dataThumbnail.thumbnail,
+        name: dataUpdate.thumbnail,
         status: 'done',
         url: `${import.meta.env.VITE_BACKEND_URL}/images/book/${dataUpdate.thumbnail}`,
       }]
@@ -89,7 +89,7 @@ const BookModalUpdate = (props) => {
       return
     }
 
-    if (dataSlider.lenght === 0) {
+    if (dataSlider.length === 0) {
       notification.error({
         message: 'Lỗi validate',
         description: 'Vui lòng upload ảnh slider'
@@ -101,12 +101,13 @@ const BookModalUpdate = (props) => {
     const slider = dataSlider.map(item => item.name)
 
     setIsSubmit(true)
-    const res = await callUpdateBook(_id, mainText, author, price, category, quantity, sold, thumbnail, slider)
+    const res = await callUpdateBook(_id, thumbnail, slider, mainText, author, price, sold, quantity, category)
     if (res && res.data) {
       message.success("Cập nhật sách thành công")
       form.resetFields()
       setDataThumbnail([])
       setDataSlider([])
+      setInitForm(null)
       setOpenModalUpdate(false)
       await props.fetchBook()
     } else {
@@ -118,10 +119,10 @@ const BookModalUpdate = (props) => {
   }
 
   const getBase64 = (img, callback) => {
-    const reader = new FileReader()
-    reader.readAsDataURL(img)
-    reader.addEventListener('load', () => callback(reader.result))
-  }
+    const reader = new FileReader();
+    reader.addEventListener('load', () => callback(reader.result));
+    reader.readAsDataURL(img);
+  };
 
   const handleChange = (info, type) => {
     if (info.file.status === 'uploading') {
@@ -178,6 +179,13 @@ const BookModalUpdate = (props) => {
   }
 
   const handlePreview = async (file) => {
+    // lấy ảnh đã được upload
+    if (file.url && !file.originFileObj) {
+      setOpenPreview(true)
+      setPreviewImage(file.url)
+      setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1))
+    }
+    // upload ảnh mới lên
     getBase64(file.originFileObj, (url) => {
       setPreviewImage(url)
       setOpenPreview(true)
@@ -400,9 +408,7 @@ const BookModalUpdate = (props) => {
         open={openPreview}
         title={previewTitle}
         footer={null}
-        onCancel={() => {
-          setOpenPreview(false)
-        }}
+        onCancel={() => { setOpenPreview(false) }}
       >
         <img alt="example" style={{ width: '100%' }} src={previewImage} />
       </Modal>
