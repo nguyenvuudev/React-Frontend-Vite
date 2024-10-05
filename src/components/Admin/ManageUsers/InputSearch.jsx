@@ -38,7 +38,7 @@ const InputSearch = (props) => {
                                 name={`fullName`}
                                 label={`Tên`}
                             >
-                                <Input placeholder="tên..." />
+                                <Input placeholder="tên" />
                             </Form.Item>
                         </Col>
                         <Col span={8}>
@@ -47,7 +47,7 @@ const InputSearch = (props) => {
                                 name={`email`}
                                 label={`Email`}
                             >
-                                <Input placeholder="email..." />
+                                <Input placeholder="email" />
                             </Form.Item>
                         </Col>
 
@@ -57,7 +57,7 @@ const InputSearch = (props) => {
                                 name={`phone`}
                                 label={`Số điện thoại`}
                             >
-                                <Input placeholder="số điện thoại..." />
+                                <Input placeholder="số điện thoại" />
                             </Form.Item>
                         </Col>
                     </Row>

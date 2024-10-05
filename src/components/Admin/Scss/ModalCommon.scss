@@ -1,4 +1,3 @@
-//modal import user
 .ant-modal-content {
   background-color: #1d0136 !important;
 
@@ -89,7 +88,7 @@
   }
 
   .ant-input {
-    background-color: #1d0136;
+    background-color: #000000;
     border-color: #251a2f;
     color: #ffffff;
 
@@ -147,5 +146,111 @@
       background-color: #f72b50;
       color: #ffffff;
     }
+  }
+
+  .ant-table-row:hover>td {
+    background: #2f0157 !important;
+  }
+
+  .ant-upload-list-item-actions .anticon {
+    color: #ff000d7a !important;
+
+    &:hover {
+      color: #ff0015 !important;
+    }
+  }
+
+  .ant-pagination {
+    .ant-pagination-item-active {
+      border-color: #7700c1;
+      background: #7700c1;
+
+      a {
+        color: #ffffff;
+      }
+    }
+
+    .ant-pagination-item-link {
+      color: #ffffff;
+    }
+
+    .ant-pagination-item a {
+      color: #ffffff;
+    }
+
+    .ant-pagination-item-ellipsis {
+      color: #ffffff;
+    }
+
+    .ant-select-selector {
+      color: #ffffff;
+      background: #7700c1;
+      border: none;
+    }
+
+    .ant-select-arrow {
+      color: #ffffff;
+    }
+
+    .ant-pagination-item-ellipsis {
+      color: #ffffff !important;
+    }
+
+    .ant-pagination-item-link-icon {
+      color: #aa00ff !important;
+    }
+
+    .ant-select-single .ant-select-selection-item {
+      color: #ffffff;
+    }
+
+    .ant-select-dropdown {
+      background: #7700c1;
+
+      .ant-select-item {
+        color: #ffffff;
+      }
+
+      .ant-select-item-option-selected {
+        background: #000000;
+        color: #ffffff;
+      }
+    }
+
+  }
+
+  .ant-input-number {
+    border: 1px solid #251a2f;
+    background-color: #000000;
+
+    .ant-input-number-input {
+      background-color: #000000;
+      color: #ffffff;
+    }
+  }
+
+  .ant-input-number-group-addon {
+    color: #ffffff;
+    background-color: #000000;
+    border: 1px solid #251a2f;
+  }
+
+  .ant-select-selector {
+    color: #ffffff;
+    background-color: #000000 !important;
+    border: 1px solid #251a2f !important;
+
+    .ant-select-selection-placeholder {
+      color: #a3a3a345;
+    }
+  }
+
+  .ant-upload-select {
+    color: #ffffff;
+  }
+
+  .ant-upload-list-item {
+    border: 1px solid #382848 !important;
+    background: #000000;
   }
 }

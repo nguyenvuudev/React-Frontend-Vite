@@ -235,10 +235,17 @@ const BookTable = () => {
               columns={columns}
               dataSource={listBook}
               onChange={onChange}
-              pagination={{
-                className: "custom-pagination-table",
-                total: total
-              }}
+              pagination={
+                {
+                  className: "custom-pagination-table",
+                  current: current,
+                  pageSize: pageSize,
+                  pageSizeOptions: [5, 10, 20, 50, 100],
+                  showSizeChanger: true,
+                  total: total,
+                  showTotal: (total, range) => { return (<div>{range[0]}-{range[1]} trên {total} hàng</div>) }
+                }
+              }
             >
 
             </Table>
