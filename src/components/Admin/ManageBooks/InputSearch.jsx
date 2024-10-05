@@ -36,7 +36,7 @@ const InputSearch = (props) => {
                 label={'Tên sách'}
                 name={'mainText'}
               >
-                <Input placeholder="tên sách..." />
+                <Input placeholder="tên sách" />
               </Form.Item>
             </Col>
             <Col
@@ -47,7 +47,7 @@ const InputSearch = (props) => {
                 label={'Tấc giả'}
                 name={'author'}
               >
-                <Input placeholder="tác giả..." />
+                <Input placeholder="tác giả" />
               </Form.Item>
             </Col>
             <Col
@@ -58,7 +58,7 @@ const InputSearch = (props) => {
                 label={'Thể loại'}
                 name={'category'}
               >
-                <Input placeholder="thể loại..." />
+                <Input placeholder="thể loại" />
               </Form.Item>
             </Col>
           </Row>
