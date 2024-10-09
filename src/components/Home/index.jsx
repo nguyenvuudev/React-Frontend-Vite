@@ -9,7 +9,7 @@ const Home = () => {
 
     const [listBook, setListBook] = useState([])
     const [current, setCurrent] = useState(1)
-    const [pageSize, setPageSize] = useState(1)
+    const [pageSize, setPageSize] = useState(10)
     const [total, setTotal] = useState(0)
 
     const [isLoading, setIsLoading] = useState(false)
@@ -19,16 +19,39 @@ const Home = () => {
     const [form] = Form.useForm()
 
     useEffect(() => {
-        const initCategory = async () => {
+
+        // Mapping từ tiếng Anh sang tiếng Việt
+        const fieldMapping = {
+            Arts: "Nghệ thuật",
+            Business: "Kinh doanh",
+            Comics: "Truyện tranh",
+            Cooking: "Nấu ăn",
+            Entertainment: "Giải trí",
+            History: "Lịch sử",
+            Music: "Âm nhạc",
+            Sports: "Thể thao",
+            Teen: "Thiếu niên",
+            Travel: "Du lịch"
+        }
+
+        // Hàm để chuyển đổi các trường từ tiếng Anh sang tiếng Việt
+        const convertFieldsToVietnamese = (data) => {
+            return data.map(item => ({
+                value: item, // trường phù hợp với giá trị của danh mục
+                label: fieldMapping[item] || item // chuyển đổi tên hoặc giữ nguyên nếu không có trong mapping
+            }))
+        }
+
+        const getCategory = async () => {
             const res = await callFetchCategory()
+            console.log("getCategory: ", res.data)
             if (res && res.data) {
-                const d = res.data.map(item => {
-                    return { label: item, value: item }
-                })
-                setListCategory(d)
+                const convertedData = convertFieldsToVietnamese(res.data) // Chuyển đổi dữ liệu
+                setListCategory(convertedData) // Cập nhật state với dữ liệu đã chuyển đổi
             }
         }
-        initCategory()
+
+        getCategory()
     }, [])
 
     useEffect(() => {
@@ -66,10 +89,30 @@ const Home = () => {
 
     const handleChangeFilter = (changedValues, values) => {
         console.log(">>> check handleChangeFilter", changedValues, values)
+
+        // chỉ kích hoạt khi mà category thay đổi
+        if (changedValues.category) {
+            const cate = values.category
+            if (cate && cate.length > 0) {
+                const merge = cate.join(',')
+                setFilter(`category=${merge}`)
+            } else {
+                setFilter('')
+            }
+        }
     }
 
     const onFinish = (values) => {
+        // console.log('>> check values: ', values)
 
+        if (values?.range?.from >= 0 && values?.range?.to >= 0) {
+            let f = `price>=${values?.range?.from}&price<=${values?.range?.to}`
+            if (values?.category?.length) {
+                const cate = values?.category?.join(',')
+                f += `&category=${cate}`
+            }
+            setFilter(f)
+        }
     }
 
     const items = [
@@ -105,7 +148,10 @@ const Home = () => {
                                 <span> <FilterTwoTone />
                                     <span style={{ fontWeight: 500 }}> Bộ lọc tìm kiếm</span>
                                 </span>
-                                <ReloadOutlined title="Reset" onClick={() => form.resetFields()} />
+                                <ReloadOutlined title="Reset" onClick={() => {
+                                    form.resetFields()
+                                    setFilter('')
+                                }} />
                             </div>
                             <Divider />
                             <Form
@@ -122,7 +168,7 @@ const Home = () => {
                                         <Row>
                                             {listCategory?.map((item, index) => {
                                                 return (
-                                                    <Col span={24} key={`index-${index}`} style={{ padding: "7px 0" }}>
+                                                    <Col span={24} key={`index-${index}`} style={{ padding: '7px 0' }}>
                                                         <Checkbox value={item.value} >
                                                             {item.label}
                                                         </Checkbox>
@@ -165,8 +211,12 @@ const Home = () => {
                                         </Col>
                                     </Row>
                                     <div>
-                                        <Button onClick={() => form.submit()}
-                                            style={{ width: "100%" }} type="primary">Áp dụng</Button>
+                                        <Button
+                                            onClick={() => form.submit()}
+                                            style={{ width: "100%" }} type="primary"
+                                        >
+                                            Áp dụng
+                                        </Button>
                                     </div>
                                 </Form.Item>
                                 <Divider />
@@ -224,7 +274,7 @@ const Home = () => {
                                                     </div>
                                                     <div className="rating">
                                                         <Rate value={5} disabled style={{ color: "#ffce3d", fontSize: 10 }} />
-                                                        <span style={{marginLeft: "10px"}}>Đã bán {item.sold}</span>
+                                                        <span style={{ marginLeft: "10px" }}>Đã bán {item.sold}</span>
                                                     </div>
                                                 </div>
                                             </div>
