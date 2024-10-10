@@ -72,7 +72,7 @@ export default function App() {
         },
 
         {
-          path: "book",
+          path: "book/:slug",
           element: <BookPage />,
         },
       ],
