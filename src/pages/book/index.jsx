@@ -1,4 +1,5 @@
 import { useLocation } from "react-router-dom"
+import ViewDetail from "../../components/Book/ViewDetail"
 
 const BookPage = () => {
   let location = useLocation()
@@ -8,11 +9,11 @@ const BookPage = () => {
 
   console.log("===check book id: ", id)
 
-return (
-  <>
-  Book Page
-  </>
-)
+  return (
+    <>
+      <ViewDetail />
+    </>
+  )
 }
 
 export default BookPage
