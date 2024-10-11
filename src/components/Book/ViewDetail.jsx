@@ -3,6 +3,7 @@ import { useRef, useState } from "react"
 import ImageGallery from "react-image-gallery"
 import "./book.scss"
 import ModalGallery from "./ModalGallery"
+import BookLoader from "./BookLoader"
 
 const ViewDetail = () => {
 
@@ -76,7 +77,7 @@ const ViewDetail = () => {
     return (
         <div style={{ background: '#efefef', padding: "20px 0" }}>
             <div className='view-detail-book' style={{ maxWidth: 1440, margin: '0 auto' }}>
-                <Row gutter={[20, 20]}>
+                {/* <Row gutter={[20, 20]}>
                     <Col md={10} sm={0} xs={0}>
                         <ImageGallery
                             ref={refGallery} // thao tác trực tiếp với functions
@@ -134,7 +135,8 @@ const ViewDetail = () => {
                             </div>
                         </Col>
                     </Col>
-                </Row>
+                </Row> */}
+                <BookLoader />
             </div>
             <ModalGallery
                 openModalViewDetail={openModalViewDetail}
